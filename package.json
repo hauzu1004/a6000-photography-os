@@ -1,0 +1,12 @@
+{
+  "name": "a6000-photography-os",
+  "version": "1.0.0",
+  "description": "Progressive Web App for Sony A6000 + 50mm F1.8 photography",
+  "scripts": {
+    "start": "python3 -m http.server 8000 || python -m http.server 8000",
+    "serve": "npx serve ."
+  },
+  "keywords": ["photography", "sony", "a6000", "pwa"],
+  "author": "",
+  "license": "MIT"
+}

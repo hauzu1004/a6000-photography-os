@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hướng Dẫn Deploy A6000 Photography OS</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  line-height: 1.6;
+  padding: 2rem;
+}
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 2rem;
+  color: #333;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+h1 {
+  color: #667eea;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+h2 {
+  color: #764ba2;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  border-left: 4px solid #667eea;
+  padding-left: 1rem;
+}
+.step {
+  background: #f7f9fc;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid #667eea;
+}
+.step-number {
+  display: inline-block;
+  background: #667eea;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 32px;
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+code {
+  background: #2d3748;
+  color: #68d391;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-family: 'SF Mono', Monaco, monospace;
+  font-size: 0.9rem;
+}
+.code-block {
+  background: #2d3748;
+  color: #68d391;
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 1rem 0;
+  font-family: 'SF Mono', Monaco, monospace;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+.method {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.method:hover { transform: translateX(5px); }
+.method-title { font-size: 1.25rem; font-weight: 600; }
+.method-desc { opacity: 0.9; font-size: 0.9rem; margin-top: 0.25rem; }
+.badge {
+  display: inline-block;
+  background: #48bb78;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-left: 0.5rem;
+}
+.warning {
+  background: #fff5f5;
+  border-left: 4px solid #fc8181;
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+.success {
+  background: #f0fff4;
+  border-left: 4px solid #48bb78;
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+a {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 600;
+}
+a:hover { text-decoration: underline; }
+ul { margin-left: 1.5rem; margin-top: 0.5rem; }
+li { margin-bottom: 0.5rem; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h1>📸 Deploy A6000 Photography OS lên Web</h1>
+
+<p style="font-size: 1.1rem; margin-bottom: 2rem;">Chuyển app của bạn thành website online, tự động cập nhật mỗi khi bạn chỉnh sửa!</p>
+
+<div class="success">
+  <strong>✅ Bạn có gì trong tay:</strong>
+  <ul>
+    <li>Folder <code>a6000-pwa</code> chứa app hoàn chỉnh</li>
+    <li>Progressive Web App với offline support</li>
+    <li>Auto-update khi có phiên bản mới</li>
+    <li>Có thể cài như app trên điện thoại</li>
+  </ul>
+</div>
+
+<h2>🚀 Chọn 1 trong 3 cách deploy (Đề xuất: GitHub Pages)</h2>
+
+<!-- METHOD 1: GitHub Pages -->
+<div class="method" onclick="toggleDetails('github')">
+  <div class="method-title">1. GitHub Pages <span class="badge">MIỄN PHÍ</span> <span class="badge">ĐỀ XUẤT</span></div>
+  <div class="method-desc">✨ Tốt nhất cho long-term, dễ update, URL đẹp, 100% miễn phí</div>
+</div>
+
+<div id="github" style="display: none;">
+
+  <div class="step">
+    <span class="step-number">1</span>
+    <strong>Tạo GitHub account (nếu chưa có)</strong>
+    <p>Vào <a href="https://github.com/signup" target="_blank">https://github.com/signup</a></p>
+  </div>
+
+  <div class="step">
+    <span class="step-number">2</span>
+    <strong>Tạo repository mới</strong>
+    <ul>
+      <li>Vào <a href="https://github.com/new" target="_blank">https://github.com/new</a></li>
+      <li>Repository name: <code>a6000-photography-os</code></li>
+      <li>Chọn <strong>Public</strong></li>
+      <li>Click <strong>Create repository</strong></li>
+    </ul>
+  </div>
+
+  <div class="step">
+    <span class="step-number">3</span>
+    <strong>Upload files lên GitHub</strong>
+    <p><strong>Cách A - Dùng Web (Dễ nhất):</strong></p>
+    <ul>
+      <li>Trong repository vừa tạo, click <strong>uploading an existing file</strong></li>
+      <li>Kéo thả tất cả files trong folder <code>a6000-pwa</code></li>
+      <li>Scroll xuống, click <strong>Commit changes</strong></li>
+    </ul>
+
+    <p style="margin-top: 1rem;"><strong>Cách B - Dùng Git command line:</strong></p>
+    <div class="code-block">cd a6000-pwa
+git init
+git add .
+git commit -m "Initial release"
+git branch -M main
+git remote add origin https://github.com/USERNAME/a6000-photography-os.git
+git push -u origin main</div>
+    <p style="font-size: 0.9rem; opacity: 0.7;">Thay <code>USERNAME</code> bằng tên GitHub của bạn</p>
+  </div>
+
+  <div class="step">
+    <span class="step-number">4</span>
+    <strong>Bật GitHub Pages</strong>
+    <ul>
+      <li>Trong repository, vào <strong>Settings</strong> → <strong>Pages</strong></li>
+      <li>Source: <strong>Deploy from a branch</strong></li>
+      <li>Branch: <strong>main</strong> / <strong>/ (root)</strong></li>
+      <li>Click <strong>Save</strong></li>
+    </ul>
+  </div>
+
+  <div class="step">
+    <span class="step-number">5</span>
+    <strong>🎉 Xong! Truy cập app của bạn</strong>
+    <p>URL: <code>https://USERNAME.github.io/a6000-photography-os/</code></p>
+    <p style="margin-top: 0.5rem;">⏱ Đợi 2-3 phút cho lần deploy đầu tiên</p>
+  </div>
+
+  <div class="success">
+    <strong>✅ Cách update sau này:</strong>
+    <ul>
+      <li>Vào repository trên GitHub</li>
+      <li>Click vào file cần sửa (vd: <code>index.html</code>)</li>
+      <li>Click nút ✏️ Edit</li>
+      <li>Chỉnh sửa nội dung</li>
+      <li>Scroll xuống, click <strong>Commit changes</strong></li>
+      <li>Đợi 1-2 phút → Website tự động cập nhật!</li>
+      <li>User mở app sẽ thấy thông báo có bản cập nhật mới</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- METHOD 2: Netlify -->
+<div class="method" onclick="toggleDetails('netlify')">
+  <div class="method-title">2. Netlify Drop <span class="badge">DỄ NHẤT</span></div>
+  <div class="method-desc">⚡ Deploy trong 30 giây, không cần account, URL ngẫu nhiên</div>
+</div>
+
+<div id="netlify" style="display: none;">
+
+  <div class="step">
+    <span class="step-number">1</span>
+    <strong>Vào Netlify Drop</strong>
+    <p><a href="https://app.netlify.com/drop" target="_blank">https://app.netlify.com/drop</a></p>
+  </div>
+
+  <div class="step">
+    <span class="step-number">2</span>
+    <strong>Kéo thả folder</strong>
+    <p>Kéo toàn bộ folder <code>a6000-pwa</code> vào trang web</p>
+  </div>
+
+  <div class="step">
+    <span class="step-number">3</span>
+    <strong>🎉 Xong!</strong>
+    <p>Bạn sẽ nhận được URL kiểu: <code>https://random-name-123.netlify.app</code></p>
+  </div>
+
+  <div class="warning">
+    <strong>⚠️ Lưu ý:</strong>
+    <ul>
+      <li>URL là random (có thể đổi nếu tạo account Netlify)</li>
+      <li>Để update: phải upload lại toàn bộ folder</li>
+      <li>Tốt cho demo nhanh, không tốt cho long-term</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- METHOD 3: Vercel -->
+<div class="method" onclick="toggleDetails('vercel')">
+  <div class="method-title">3. Vercel <span class="badge">NHANH</span></div>
+  <div class="method-desc">🚄 Deploy siêu nhanh, URL đẹp, cần GitHub account</div>
+</div>
+
+<div id="vercel" style="display: none;">
+
+  <div class="step">
+    <span class="step-number">1</span>
+    <strong>Upload code lên GitHub</strong>
+    <p>Làm theo bước 1-3 của phương pháp GitHub Pages ở trên</p>
+  </div>
+
+  <div class="step">
+    <span class="step-number">2</span>
+    <strong>Tạo Vercel account</strong>
+    <p>Vào <a href="https://vercel.com/signup" target="_blank">https://vercel.com/signup</a></p>
+    <p>Đăng nhập bằng GitHub account</p>
+  </div>
+
+  <div class="step">
+    <span class="step-number">3</span>
+    <strong>Import repository</strong>
+    <ul>
+      <li>Click <strong>Add New Project</strong></li>
+      <li>Chọn repository <code>a6000-photography-os</code></li>
+      <li>Click <strong>Deploy</strong></li>
+    </ul>
+  </div>
+
+  <div class="step">
+    <span class="step-number">4</span>
+    <strong>🎉 Xong!</strong>
+    <p>URL: <code>https://a6000-photography-os.vercel.app</code></p>
+    <p style="margin-top: 0.5rem;">Mỗi lần bạn push code mới lên GitHub, Vercel tự động deploy!</p>
+  </div>
+
+</div>
+
+<h2>📱 Cài App lên Điện Thoại</h2>
+
+<div class="step">
+  <strong>iPhone (Safari):</strong>
+  <ol>
+    <li>Mở website bằng Safari</li>
+    <li>Nhấn nút <strong>Share</strong> (hình mũi tên chỉ lên)</li>
+    <li>Chọn <strong>Add to Home Screen</strong></li>
+    <li>Nhấn <strong>Add</strong></li>
+  </ol>
+</div>
+
+<div class="step">
+  <strong>Android (Chrome):</strong>
+  <ol>
+    <li>Mở website bằng Chrome</li>
+    <li>Nhấn menu <strong>⋮</strong> (3 chấm)</li>
+    <li>Chọn <strong>Install App</strong> hoặc <strong>Add to Home screen</strong></li>
+    <li>Nhấn <strong>Install</strong></li>
+  </ol>
+</div>
+
+<div class="success">
+  <strong>✅ Sau khi cài:</strong>
+  <ul>
+    <li>App xuất hiện như app bình thường trên màn hình</li>
+    <li>Mở app = full screen (không có thanh địa chỉ browser)</li>
+    <li>Hoạt động offline (sau lần mở đầu tiên)</li>
+    <li>Tự động thông báo khi có bản update mới</li>
+  </ul>
+</div>
+
+<h2>🔄 Cách Update Nội Dung</h2>
+
+<div class="step">
+  <span class="step-number">1</span>
+  <strong>Chỉnh sửa file</strong>
+  <p>Sửa trực tiếp trên GitHub (nút ✏️) hoặc edit local rồi push lên</p>
+</div>
+
+<div class="step">
+  <span class="step-number">2</span>
+  <strong>Update version number</strong>
+  <p>Mở file <code>version.json</code>, tăng số version:</p>
+  <div class="code-block">{
+  "version": "v1.0.1",  ← Tăng số này
+  "buildDate": "2026-10-07",
+  "changelog": [
+    "Added new video scenario",
+    "Fixed cafe preset"
+  ]
+}</div>
+</div>
+
+<div class="step">
+  <span class="step-number">3</span>
+  <strong>Commit changes</strong>
+  <p>Sau 1-2 phút, website tự động cập nhật</p>
+</div>
+
+<div class="step">
+  <span class="step-number">4</span>
+  <strong>🎉 User thấy thông báo update</strong>
+  <p>Khi user mở app, sẽ thấy banner thông báo có bản mới, tap để reload!</p>
+</div>
+
+<h2>🛠 Troubleshooting</h2>
+
+<div class="warning">
+  <strong>❓ Website không hiển thị?</strong>
+  <ul>
+    <li>Đợi 2-3 phút cho lần deploy đầu</li>
+    <li>Check GitHub Pages settings đã bật chưa</li>
+    <li>URL phải là: <code>https://USERNAME.github.io/REPO-NAME/</code></li>
+  </ul>
+</div>
+
+<div class="warning">
+  <strong>❓ App không update?</strong>
+  <ul>
+    <li>Đã tăng version number trong <code>version.json</code> chưa?</li>
+    <li>Hard refresh: Ctrl+Shift+R (desktop) hoặc xóa cache</li>
+    <li>Service worker cần 1-2 phút để phát hiện update</li>
+  </ul>
+</div>
+
+<div class="warning">
+  <strong>❓ Icons không hiện?</strong>
+  <ul>
+    <li>Đảm bảo file <code>icon-192.png</code> và <code>icon-512.png</code> đã upload</li>
+    <li>Check file <code>manifest.json</code> có paths đúng</li>
+    <li>Thử re-deploy</li>
+  </ul>
+</div>
+
+<h2>📊 Bonus: Thêm Analytics (Optional)</h2>
+
+<div class="step">
+  <strong>Nếu muốn theo dõi số lượng người dùng:</strong>
+  <ol>
+    <li>Tạo Google Analytics account: <a href="https://analytics.google.com" target="_blank">analytics.google.com</a></li>
+    <li>Lấy tracking ID (dạng G-XXXXXXXXXX)</li>
+    <li>Thêm code này vào <code>index.html</code> trước thẻ <code>&lt;/head&gt;</code>:</li>
+  </ol>
+  <div class="code-block">&lt;!-- Google Analytics --&gt;
+&lt;script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"&gt;&lt;/script&gt;
+&lt;script&gt;
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+&lt;/script&gt;</div>
+</div>
+
+<div class="success" style="margin-top: 2rem; text-align: center; font-size: 1.1rem;">
+  <strong>🎉 Chúc mừng! App của bạn giờ đã online!</strong>
+  <p style="margin-top: 0.5rem;">Chia sẻ link cho bạn bè và enjoy! 📸</p>
+</div>
+
+</div>
+
+<script>
+function toggleDetails(id) {
+  const el = document.getElementById(id);
+  if (el.style.display === 'none') {
+    // Hide all
+    document.getElementById('github').style.display = 'none';
+    document.getElementById('netlify').style.display = 'none';
+    document.getElementById('vercel').style.display = 'none';
+    // Show selected
+    el.style.display = 'block';
+    // Scroll to it
+    setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+  } else {
+    el.style.display = 'none';
+  }
+}
+</script>
+
+</body>
+</html>
