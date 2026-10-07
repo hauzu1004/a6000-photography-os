@@ -1,7 +1,9 @@
 {
-  "version": "v19.0.0",
+  "version": "v21.0.0",
   "buildDate": "2026-10-08",
   "changelog": [
+    "V21: searchable bilingual catalog, light/subject/purpose filters, field workflows, saved photo and video preflight, version display and user-controlled updates.",
+    "Separated styling, application logic and video case data; added release validation, service worker regression checks and deployment artifact staging.",
     "Roadmap Phase 1: dedicated Photo OS Start Here layer.",
     "Added MR1/MR2/MR3 base chooser and Photo quick-decision matrix.",
     "Added Photo Control Ladder for movement, aperture, shutter, ISO, EV, focus and WB.",

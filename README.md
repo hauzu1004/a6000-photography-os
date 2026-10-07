@@ -1,245 +1,73 @@
 # A6000 + 50mm Photo + Video OS
 
-Progressive Web App for Sony A6000 + 50mm F1.8 OSS
+Production: **https://hauzu1004.github.io/a6000-photography-os/**
 
-## 🚀 Quick Start
+Current release: **v21.0.0**. Use this same URL for everyday work; no ZIP download or local server is needed.
 
-### Option 1: GitHub Pages (Recommended)
+## Everyday use
 
-1. **Create GitHub Repository**
-   - Go to https://github.com/new
-   - Repository name: `a6000-photography-os`
-   - Set to Public
-   - Click "Create repository"
+1. Open the app online once so its offline files install.
+2. Choose Photo or Video, or search for a subject in English or Vietnamese (accents optional).
+3. Open **Filters · field workflows · preflight** for light/subject/purpose filters, quick workflows and checklists.
+4. The label next to **Check update** identifies the version actually loaded in this tab.
+5. When a new worker is ready, choose **Update now** or **Later**. Updating keeps local checklists and language preference.
 
-2. **Upload Files**
-   ```bash
-   cd a6000-pwa
-   git init
-   git add .
-   git commit -m "Initial PWA release"
-   git branch -M main
-   git remote add origin https://github.com/YOUR_USERNAME/a6000-photography-os.git
-   git push -u origin main
-   ```
+Install using your browser's Install app / Add to Home Screen command. External documentation links require a connection. Offline content becomes available only after a successful first online visit.
 
-3. **Enable GitHub Pages**
-   - Go to repository Settings → Pages
-   - Source: Deploy from a branch
-   - Branch: `main` / `/ (root)`
-   - Click Save
+## Development and validation
 
-4. **Access Your App**
-   - URL: `https://YOUR_USERNAME.github.io/a6000-photography-os/`
-   - Wait 2-3 minutes for first deployment
+Use Node.js 24 (minimum 22):
 
-### Option 2: Netlify (Alternative)
+```sh
+npm ci
+npm test
+npm run build
+npm run serve
+```
 
-1. Go to https://app.netlify.com/drop
-2. Drag the entire `a6000-pwa` folder
-3. Get instant URL like: `https://random-name.netlify.app`
+Preview at `http://localhost:3001/a6000-photography-os/`. Localhost supports the service worker, so it can be exercised before deployment. A development change to a precached asset requires a new worker/cache version or clearing **only the local preview** worker/cache; do not clear production storage unnecessarily.
 
-### Option 3: Vercel (Alternative)
+## Release process
 
-1. Go to https://vercel.com/new
-2. Import the `a6000-pwa` folder
-3. Deploy instantly
-
-## 📱 Install as App
-
-**On Mobile (iOS/Android):**
-1. Open the web app in browser
-2. Safari (iOS): Tap Share → Add to Home Screen
-3. Chrome (Android): Tap ⋮ → Install App
-
-**On Desktop (Chrome/Edge):**
-1. Click the install icon (➕) in address bar
-2. Or: ⋮ Menu → Install A6000 OS
-
-## 🔄 How to Update
-
-### Method 1: Edit on GitHub
-
-1. Go to your repository on GitHub
-2. Navigate to file (e.g., `index.html`)
-3. Click ✏️ Edit button
-4. Make changes
-5. Commit changes
-6. GitHub Pages auto-deploys in 1-2 minutes
-7. Users get update notification automatically
-
-### Method 2: Local Edit + Push
-
-```bash
-cd a6000-pwa
-# Edit files locally
+```sh
+npm run release -- v21.0.1 "Describe the change"
+npm test
+npm run build
 git add .
-git commit -m "Update: description of changes"
-git push
+git commit -m "Release v21.0.1: describe the change"
+git push origin main
 ```
 
-### Update Version Number
+The release command updates `version.json`, `release.js`, `service-worker.js`, `package.json` and the lockfile together. Append the release description to `CHANGELOG.md`. Commit all release changes atomically. Never reuse a cache version for changed app assets.
 
-After making changes, update `version.json`:
+`.github/workflows/deploy.yml` installs locked development dependencies, validates release/assets, runs regression checks, stages only production files into `dist/`, then uploads/deploys Pages. A failed check prevents publication.
 
-```json
-{
-  "version": "v1.0.1",  // ← Increment this
-  "buildDate": "2026-10-07",
-  "changelog": [
-    "Added new video scenario",
-    "Fixed cafe preset"
-  ]
-}
-```
+Pages is the only production target. Preserve the existing Pages configuration; the workflow is already active. Netlify is not required.
 
-Users will see update notification automatically!
+After release, verify the latest Actions run corresponds to the current `main` commit and succeeds. Check the live version, worker, manifest, both icons and app scripts. Open the app, confirm the displayed release and try Photo, Video and a search result.
 
-## ✨ Features
+## Source layout
 
-- ✅ **Progressive Web App** - Install like native app
-- ✅ **Offline Support** - Works without internet
-- ✅ **Auto Updates** - Notifications when new version available
-- ✅ **Mobile Optimized** - Perfect for field use
-- ✅ **Fast Loading** - Cached for instant access
-- ✅ **Cross-Platform** - Works on iOS, Android, Desktop
+- `index.html`: preserved Photo/Video content and page structure.
+- `app.css`, `field-tools.css`: existing and new responsive styles.
+- `legacy-app.js`: original navigation and interactions, with navigation/storage fixes.
+- `field-cases.js`: video case data separate from rendering.
+- `field-tools.js`: search catalog, field filters, workflow summaries, quick links and checklists.
+- `pwa.js`: registration, loaded-version status and update UI.
+- `service-worker.js`: scoped cache, legacy migration and offline app shell.
+- `version.json`, `release.js`: release metadata.
+- `scripts/`: release, validation, regression checks, staging and local preview.
+- `ROADMAP.md`, `CHANGELOG.md`: scope and release history.
 
-## 📁 Project Structure
+## Recovery and data
 
-```
-a6000-pwa/
-├── index.html              # Main app (your V13 file)
-├── manifest.json           # PWA configuration
-├── service-worker.js       # Offline & caching
-├── version.json           # Version tracking
-├── icon-192.png           # App icon (small)
-├── icon-512.png           # App icon (large)
-└── README.md              # This file
-```
+- If upgrading from V18/V19, close all app tabs and reopen once if the old interface persists. The new worker includes migration from those legacy caches.
+- An update failure leaves the current app available; retry **Check update** when online.
+- **Start a new session** resets only the new field preflight checks after confirmation. Original checklists are separate and preserved.
+- Checklists live in this browser profile, not in an account. Clearing site data or uninstalling the profile may erase them.
+- Extension `runtime.lastError` messages must be diagnosed in the extension; this app ignores extension requests. Confirm the source before changing app code.
+- To roll back, restore known-good app source in a new commit and run the release command with a *newer* version. Do not reuse an older cache name or rewrite Git history.
 
-## 🛠 Development
+## Verification limits
 
-### Test Locally
-
-```bash
-# Simple HTTP server
-python -m http.server 8000
-# Or
-npx serve .
-```
-
-Visit: `http://localhost:8000`
-
-### Check PWA Status
-
-Chrome DevTools → Application → Manifest, Service Workers
-
-## 📝 Content Updates
-
-### Add New Photo Scenario
-Edit `index.html`, find `<!-- Photo Scenarios -->`, add new card
-
-### Add New Video Preset
-Find `<!-- Video Presets -->`, duplicate existing preset structure
-
-### Change Colors
-Edit CSS variables in `:root` section
-
-### Update Text
-Find `data-en` and `data-vi` attributes for bilingual content
-
-## 🌐 Custom Domain (Optional)
-
-### GitHub Pages Custom Domain
-
-1. Buy domain (Namecheap, Google Domains)
-2. Add CNAME file to repo:
-   ```
-   your-custom-domain.com
-   ```
-3. Configure DNS:
-   - Add CNAME record: `www` → `YOUR_USERNAME.github.io`
-   - Add A records for apex domain
-
-### Netlify Custom Domain
-
-1. Site settings → Domain management
-2. Add custom domain
-3. Follow DNS instructions
-
-## 🚨 Troubleshooting
-
-**App not updating?**
-- Check version.json was updated
-- Hard refresh: Ctrl+Shift+R (desktop) or clear browser cache
-- Service worker takes 1-2 minutes to detect updates
-
-**Icons not showing?**
-- Ensure icon files are in root directory
-- Check manifest.json paths are correct
-- Re-deploy if needed
-
-**Not working offline?**
-- Service worker must register first (visit online once)
-- Check DevTools → Application → Service Workers
-
-## 📊 Analytics (Optional)
-
-Add Google Analytics by inserting before `</head>`:
-
-```html
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
-</script>
-```
-
-## 📄 License
-
-Personal use project for A6000 + 50mm F1.8 photography
-
----
-
-**Made with ❤️ for Sony A6000 photographers**
-
-
-## Local testing (V18)
-
-With Node.js on Windows:
-
-```powershell
-cd "<path-to>\a6000-pwa"
-npx serve . -l 3001
-```
-
-Open `http://localhost:3001`. Service Worker is intentionally disabled on localhost during local testing.
-
-Video flow: `VIDEO` → `A6000 VIDEO OS` → `OPEN VIDEO FIELD CASES →` → choose a short card → `OPEN CASE →` → detailed case.
-
-## V19 Photo + Video OS
-
-The Video OS includes a quick-start selector, six base video presets (V1–V6), expandable setup details, exposure/motion rules, focus/WB/audio guidance, a persistent pre-flight checklist, troubleshooting, weather/light guidance, and a separate Video Field Case Library.
-
-
-## V18 Field Cases
-
-### Photo
-- Morning Warm Sun — Tree-Lined Road
-- Sun Through Trees — Warm Leaf Light
-- Morning Walker — Human Scale
-
-### Video
-- Morning Warm Sun — Cinematic Road
-- Sun Through Canopy — Slow Pan
-- Morning Walker — Human Scale B-roll
-
-The Field Case Library keeps cards concise; use **OPEN CASE →** to open the detailed workflow. Photo and Video libraries remain separate.
-
-
-## V19 Photo OS
-
-Phase 1 consolidates the Photo OS around a scene-first Start Here decision layer, MR1/MR2/MR3 base selection, a Photo Control Ladder, Photo Quick Rules, and the existing Photo Field Case Library.
+Regression tests model offline/cache/update behavior. Browser checks cover actual layout and navigation. Installation and standalone launch behavior should also be checked on the user's physical iOS/Android devices; those devices are not available in this workspace.
