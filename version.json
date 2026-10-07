@@ -1,7 +1,12 @@
 {
-  "version": "v18.0.3",
+  "version": "v19.0.0",
   "buildDate": "2026-10-08",
   "changelog": [
+    "Roadmap Phase 1: dedicated Photo OS Start Here layer.",
+    "Added MR1/MR2/MR3 base chooser and Photo quick-decision matrix.",
+    "Added Photo Control Ladder for movement, aperture, shutter, ISO, EV, focus and WB.",
+    "Added Photo Quick Rules and one-variable-at-a-time debugging guidance.",
+    "No new Field Case added in V19; Photo and Video Field Case Libraries remain separate.",
     "Prevented the service worker from caching browser extension and out-of-scope requests.",
     "Activated the GitHub Pages deployment workflow so updates on main publish to the project site.",
     "Fixed GitHub Pages project-site paths for the manifest, icons, service worker, and update checks.",
