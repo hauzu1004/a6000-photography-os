@@ -1,13 +1,14 @@
-const APP_VERSION = 'v18.0.0';
+const APP_VERSION = 'v18.0.1';
 const CACHE_NAME = `a6000-os-${APP_VERSION}`;
 
 // Files to cache
+const BASE_PATH = new URL('./', self.location).pathname;
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/icon-192.png',
-  '/icon-512.png'
+  BASE_PATH,
+  BASE_PATH + 'index.html',
+  BASE_PATH + 'manifest.json',
+  BASE_PATH + 'icon-192.png',
+  BASE_PATH + 'icon-512.png'
 ];
 
 // Install event - cache files
@@ -81,7 +82,7 @@ self.addEventListener('message', event => {
 
 async function checkForUpdates() {
   try {
-    const response = await fetch('/version.json?' + Date.now());
+    const response = await fetch(new URL('version.json?' + Date.now(), self.registration.scope));
     const data = await response.json();
 
     if (data.version !== APP_VERSION) {
