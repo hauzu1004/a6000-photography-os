@@ -1233,6 +1233,22 @@ body {
 .video-rule-card-text{color:var(--text-dim);font-size:.72rem;line-height:1.5}
 @media (min-width:760px){.video-start-here{grid-template-columns:1fr 2fr}.video-preset-quick-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.video-rule-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 
+
+/* V19 Photo OS core */
+.photo-os-hero{background:var(--bg-2);border:1px solid var(--border);border-radius:1rem;padding:1rem;margin-bottom:1rem}
+.photo-os-breadcrumb{font-size:.68rem;color:var(--text-muted);margin-bottom:.35rem}.photo-os-breadcrumb b{color:var(--accent)}
+.photo-os-title{font-size:1.35rem;font-weight:750;color:var(--accent);letter-spacing:-.02em}.photo-os-sub{font-size:.76rem;color:var(--text-dim);line-height:1.55;margin-top:.35rem}
+.photo-start-here{display:grid;gap:.8rem}.photo-start-card{background:var(--bg-2);border:1px solid var(--border);border-radius:1rem;padding:.95rem}
+.photo-start-title{color:var(--accent);font-size:.88rem;font-weight:750;margin-bottom:.3rem}.photo-start-sub{font-size:.73rem;color:var(--text-muted);line-height:1.5;margin-bottom:.7rem}
+.photo-base-grid,.photo-decision-grid,.photo-rule-grid{display:grid;gap:.55rem}.photo-base,.photo-decision,.photo-rule{background:var(--bg-3);border:1px solid var(--border);border-radius:.65rem;padding:.68rem}
+.photo-base-title,.photo-decision-q{font-size:.76rem;font-weight:750;color:var(--text)}.photo-base-text,.photo-decision-a,.photo-rule span{font-size:.7rem;line-height:1.5;color:var(--text-dim);margin-top:.18rem}
+.photo-decision-a{font-family:'SF Mono','Monaco',monospace;color:var(--text)}.photo-control-ladder{display:grid;gap:.55rem}
+.photo-control-step{display:grid;grid-template-columns:2rem 1fr;gap:.55rem;align-items:start;background:var(--bg-2);border-radius:.65rem;padding:.68rem}
+.photo-control-num{width:2rem;height:2rem;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid var(--border);background:var(--bg-3);color:var(--accent);font-weight:800;font-size:.7rem}
+.photo-control-step b{font-size:.76rem;color:var(--text)}.photo-control-step div>div{font-size:.7rem;line-height:1.5;color:var(--text-dim);margin-top:.12rem}
+.photo-rule b{display:block;font-size:.7rem;color:var(--accent);margin-bottom:.15rem}
+@media (min-width:760px){.photo-start-here{grid-template-columns:1fr 1fr}.photo-base-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.photo-decision-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.photo-rule-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
 </style>
 </head>
 <body>
@@ -1252,6 +1268,61 @@ body {
   <button id="photoTab" class="main-tab active" onclick="showScreen('home')">📸 <span data-en="PHOTO" data-vi="ẢNH">PHOTO</span></button>
   <button id="videoTab" class="main-tab" onclick="showScreen('video')">🎥 <span data-en="VIDEO" data-vi="VIDEO">VIDEO</span></button>
 </nav>
+
+
+  <div class="photo-os-hero">
+    <div class="photo-os-breadcrumb"><span data-en="A6000 + 50mm OS" data-vi="A6000 + 50mm OS">A6000 + 50mm OS</span> / <b>PHOTO OS</b></div>
+    <div class="photo-os-title">📸 <span data-en="A6000 PHOTO OS" data-vi="A6000 PHOTO OS">A6000 PHOTO OS</span></div>
+    <div class="photo-os-sub" data-en="A scene-first workflow: choose the subject and light → choose the closest base preset → adjust only the setting that controls the problem." data-vi="Workflow theo tình huống: xác định chủ thể và ánh sáng → chọn preset nền gần nhất → chỉ chỉnh thông số đang giải quyết vấn đề.">A scene-first workflow: choose the subject and light → choose the closest base preset → adjust only the setting that controls the problem.</div>
+  </div>
+
+  <div class="photo-start-here">
+    <div class="photo-start-card">
+      <div class="photo-start-title">🧭 <span data-en="START HERE — WHICH BASE?" data-vi="BẮT ĐẦU — CHỌN PRESET NỀN">START HERE — WHICH BASE?</span></div>
+      <div class="photo-start-sub" data-en="The three MR memories are bases, not locked recipes. Recall one, then make 0–2 quick adjustments for the shot." data-vi="Ba Memory MR là preset nền, không phải công thức cố định. Recall một preset rồi chỉnh 0–2 thông số cho đúng shot.">The three MR memories are bases, not locked recipes. Recall one, then make 0–2 quick adjustments for the shot.</div>
+      <div class="photo-base-grid">
+        <div class="photo-base"><div class="photo-base-title">🏠 MR1 — Indoor / Low Light</div><div class="photo-base-text" data-en="Cafe, food, indoor details, low light. Start A + f/1.8–2.8 + ISO AUTO." data-vi="Cafe, đồ ăn, chi tiết trong nhà, thiếu sáng. Bắt đầu A + f/1.8–2.8 + ISO AUTO.">Cafe, food, indoor details, low light. Start A + f/1.8–2.8 + ISO AUTO.</div></div>
+        <div class="photo-base"><div class="photo-base-title">👤 MR2 — Portrait / People</div><div class="photo-base-text" data-en="People and portraits. Start around f/2.8–4; use AF-S for still subjects and AF-C for moving subjects." data-vi="Con người và chân dung. Bắt đầu khoảng f/2.8–4; AF-S cho chủ thể đứng yên, AF-C khi chuyển động.">People and portraits. Start around f/2.8–4; use AF-S for still subjects and AF-C for moving subjects.</div></div>
+        <div class="photo-base"><div class="photo-base-title">🏙 MR3 — Street / Action</div><div class="photo-base-text" data-en="Outdoor, street, travel and motion. Start around f/4–5.6; switch to S when shutter speed is the priority." data-vi="Ngoài trời, đường phố, du lịch và chuyển động. Bắt đầu khoảng f/4–5.6; chuyển sang S khi tốc độ màn trập là ưu tiên.">Outdoor, street, travel and motion. Start around f/4–5.6; switch to S when shutter speed is the priority.</div></div>
+      </div>
+    </div>
+
+    <div class="photo-start-card">
+      <div class="photo-start-title">🎯 <span data-en="QUICK DECISION" data-vi="QUYẾT ĐỊNH NHANH">QUICK DECISION</span></div>
+      <div class="photo-decision-grid">
+        <div class="photo-decision"><div class="photo-decision-q" data-en="Static scene?" data-vi="Cảnh tĩnh?">Static scene?</div><div class="photo-decision-a">A → f/4–8 → ISO AUTO → AF-S</div></div>
+        <div class="photo-decision"><div class="photo-decision-q" data-en="People?" data-vi="Người?">People?</div><div class="photo-decision-a">MR2 → f/2.8–4 → AF-S/AF-C</div></div>
+        <div class="photo-decision"><div class="photo-decision-q" data-en="Fast movement?" data-vi="Chuyển động nhanh?">Fast movement?</div><div class="photo-decision-a">S → 1/320–1/500+ → AF-C → Zone</div></div>
+        <div class="photo-decision"><div class="photo-decision-q" data-en="Low light?" data-vi="Thiếu sáng?">Low light?</div><div class="photo-decision-a">MR1 → f/1.8–2.8 → ISO AUTO → watch shutter</div></div>
+        <div class="photo-decision"><div class="photo-decision-q" data-en="Background too busy?" data-vi="Nền quá rối?">Background too busy?</div><div class="photo-decision-a">Open aperture → move closer → simplify background</div></div>
+        <div class="photo-decision"><div class="photo-decision-q" data-en="Highlights too bright?" data-vi="Highlight quá sáng?">Highlights too bright?</div><div class="photo-decision-a">EV −0.3 → −0.7 → protect bright areas</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-card">
+    <div class="section-title" style="margin-top:0" data-en="🪜 PHOTO CONTROL LADDER" data-vi="🪜 PHOTO CONTROL LADDER">🪜 PHOTO CONTROL LADDER</div>
+    <div class="photo-control-ladder">
+      <div class="photo-control-step"><span class="photo-control-num">1</span><div><b data-en="Subject movement" data-vi="Chuyển động chủ thể">Subject movement</b><div data-en="Static → A. Moving → AF-C. Fast action → S and set the shutter first." data-vi="Chủ thể tĩnh → A. Chủ thể chuyển động → AF-C. Hành động nhanh → S và đặt shutter trước.">Static → A. Moving → AF-C. Fast action → S and set the shutter first.</div></div></div>
+      <div class="photo-control-step"><span class="photo-control-num">2</span><div><b>Aperture = DOF</b><div data-en="f/1.8–2.8 for separation; f/4–5.6 for a safer focus margin; f/5.6–8 for more depth." data-vi="f/1.8–2.8 để tách nền; f/4–5.6 để dễ giữ nét hơn; f/5.6–8 để lấy nhiều chiều sâu hơn.">f/1.8–2.8 for separation; f/4–5.6 for a safer focus margin; f/5.6–8 for more depth.</div></div></div>
+      <div class="photo-control-step"><span class="photo-control-num">3</span><div><b data-en="Shutter = motion" data-vi="Shutter = chuyển động">Shutter = motion</b><div data-en="Practical starting points: ~1/80 for handheld static subjects, 1/125–1/250 for people, 1/320–1/500+ for faster action. Subject motion matters more than OSS." data-vi="Điểm bắt đầu thực tế: ~1/80 cho chủ thể tĩnh khi cầm tay, 1/125–1/250 cho người, 1/320–1/500+ cho chuyển động nhanh. Chuyển động của chủ thể quan trọng hơn OSS.">Practical starting points: ~1/80 for handheld static subjects, 1/125–1/250 for people, 1/320–1/500+ for faster action. Subject motion matters more than OSS.</div></div></div>
+      <div class="photo-control-step"><span class="photo-control-num">4</span><div><b data-en="ISO = exposure support" data-vi="ISO = hỗ trợ exposure">ISO = exposure support</b><div data-en="Base ISO AUTO: Minimum 100, Maximum 6400. Use ISO to support the aperture/shutter choice; higher ISO adds noise." data-vi="ISO AUTO nền: Minimum 100, Maximum 6400. Dùng ISO để hỗ trợ lựa chọn khẩu/shutter; ISO cao hơn sẽ tăng noise.">Base ISO AUTO: Minimum 100, Maximum 6400. Use ISO to support the aperture/shutter choice; higher ISO adds noise.</div></div></div>
+      <div class="photo-control-step"><span class="photo-control-num">5</span><div><b data-en="EV = overall brightness bias" data-vi="EV = bias độ sáng tổng thể">EV = overall brightness bias</b><div data-en="In auto-exposure modes, use a small negative EV to protect bright sky/lamps; use positive EV only when the subject is consistently too dark." data-vi="Trong chế độ auto-exposure, dùng EV âm nhẹ để bảo vệ trời/đèn; chỉ dùng EV dương khi chủ thể liên tục quá tối.">In auto-exposure modes, use a small negative EV to protect bright sky/lamps; use positive EV only when the subject is consistently too dark.</div></div></div>
+      <div class="photo-control-step"><span class="photo-control-num">6</span><div><b data-en="Focus + WB finish the look" data-vi="Focus + WB hoàn thiện shot">Focus + WB finish the look</b><div data-en="A6000 menu: Focus Mode = AF-S / AF-A / AF-C / DMF / MF. Focus Area = Wide / Zone / Center / Flexible Spot. Use fixed WB when a series needs consistent color." data-vi="Menu A6000: Focus Mode = AF-S / AF-A / AF-C / DMF / MF. Focus Area = Wide / Zone / Center / Flexible Spot. Khóa WB khi một sequence cần màu nhất quán.">A6000 menu: Focus Mode = AF-S / AF-A / AF-C / DMF / MF. Focus Area = Wide / Zone / Center / Flexible Spot. Use fixed WB when a series needs consistent color.</div></div></div>
+    </div>
+  </div>
+
+  <div class="info-card">
+    <div class="section-title" style="margin-top:0" data-en="⚡ PHOTO QUICK RULES" data-vi="⚡ QUY TẮC NHANH KHI CHỤP">⚡ PHOTO QUICK RULES</div>
+    <div class="photo-rule-grid">
+      <div class="photo-rule"><b>ISO AUTO</b><span data-en="Base: 100–6400. Raise the ceiling only when the light/quality trade-off requires it." data-vi="Nền: 100–6400. Chỉ tăng trần ISO khi điều kiện sáng/chất lượng ảnh yêu cầu.">Base: 100–6400. Raise the ceiling only when the light/quality trade-off requires it.</span></div>
+      <div class="photo-rule"><b>AF-S</b><span data-en="Use for static subjects." data-vi="Dùng cho chủ thể tĩnh.">Use for static subjects.</span></div>
+      <div class="photo-rule"><b>AF-C</b><span data-en="Use for moving subjects; pair with Zone when you want a defined region." data-vi="Dùng cho chủ thể chuyển động; kết hợp Zone khi muốn giới hạn vùng làm việc.">Use for moving subjects; pair with Zone when you want a defined region.</span></div>
+      <div class="photo-rule"><b>WB</b><span data-en="Auto for changing light; Daylight/Cloudy/Shade for a repeatable color bias." data-vi="Auto khi ánh sáng thay đổi; Daylight/Cloudy/Shade khi muốn màu ổn định/có chủ ý.">Auto for changing light; Daylight/Cloudy/Shade for a repeatable color bias.</span></div>
+      <div class="photo-rule"><b>RAW+JPEG</b><span data-en="Convenient JPEG + editable RAW." data-vi="JPEG tiện dùng + RAW để hậu kỳ.">Convenient JPEG + editable RAW.</span></div>
+      <div class="photo-rule"><b>ONE CHANGE AT A TIME</b><span data-en="When debugging a shot, change one variable, shoot again, compare, then continue." data-vi="Khi xử lý một shot, chỉ đổi một thông số, chụp lại, so sánh rồi mới đổi tiếp.">When debugging a shot, change one variable, shoot again, compare, then continue.</span></div>
+    </div>
+  </div>
 
 <div id="homeScreen" class="home-screen">
   <div class="section-title" data-en="QUICK PRESETS" data-vi="PRESET NHANH">QUICK PRESETS</div>
