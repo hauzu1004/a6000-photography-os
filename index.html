@@ -12,17 +12,17 @@
 <meta name="apple-mobile-web-app-title" content="A6000 OS">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#38BDF8">
-<link rel="manifest" href="/manifest.json">
-<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png">
-<link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png">
+<link rel="apple-touch-icon" href="./icon-192.png">
 
 <!-- Service Worker Registration -->
 <script>
 const IS_LOCALHOST = ['localhost','127.0.0.1','::1'].includes(location.hostname);
 if ('serviceWorker' in navigator && !IS_LOCALHOST) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js')
+    navigator.serviceWorker.register('./service-worker.js')
       .then(registration => {
         console.log('ServiceWorker registered:', registration.scope);
         setInterval(() => registration.update(), 3600000);
