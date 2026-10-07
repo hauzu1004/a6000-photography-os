@@ -1,5 +1,5 @@
-const CACHE_VERSION = 'a6000-os-v1.0.0';
-const CACHE_NAME = `a6000-os-${CACHE_VERSION}`;
+const APP_VERSION = 'v18.0.0';
+const CACHE_NAME = `a6000-os-${APP_VERSION}`;
 
 // Files to cache
 const urlsToCache = [
@@ -84,7 +84,7 @@ async function checkForUpdates() {
     const response = await fetch('/version.json?' + Date.now());
     const data = await response.json();
 
-    if (data.version !== CACHE_VERSION) {
+    if (data.version !== APP_VERSION) {
       // New version available
       self.clients.matchAll().then(clients => {
         clients.forEach(client => {

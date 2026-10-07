@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>A6000 + 50mm OS — FINAL V7</title>
+<title>A6000 + 50mm OS — FINAL V18</title>
 
 <!-- PWA Meta Tags -->
 <meta name="application-name" content="A6000 OS">
@@ -19,18 +19,13 @@
 
 <!-- Service Worker Registration -->
 <script>
-if ('serviceWorker' in navigator) {
+const IS_LOCALHOST = ['localhost','127.0.0.1','::1'].includes(location.hostname);
+if ('serviceWorker' in navigator && !IS_LOCALHOST) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/service-worker.js')
       .then(registration => {
         console.log('ServiceWorker registered:', registration.scope);
-        
-        // Check for updates every hour
-        setInterval(() => {
-          registration.update();
-        }, 3600000);
-        
-        // Listen for update messages
+        setInterval(() => registration.update(), 3600000);
         navigator.serviceWorker.addEventListener('message', event => {
           if (event.data && event.data.type === 'UPDATE_AVAILABLE') {
             showUpdateNotification(event.data.version);
@@ -39,8 +34,12 @@ if ('serviceWorker' in navigator) {
       })
       .catch(err => console.log('ServiceWorker registration failed:', err));
   });
+} else if (IS_LOCALHOST) {
+  console.log('[A6000 OS] Localhost detected — service worker disabled for local testing.');
 }
+</script>
 
+<script>
 function showUpdateNotification(version) {
   const notification = document.createElement('div');
   notification.style.cssText = `
@@ -1176,7 +1175,7 @@ body {
 .video-case-search { width:100%; background:var(--bg-2); color:var(--text); border:1px solid var(--border); border-radius:.7rem; padding:.75rem .85rem; font-size:.82rem; margin-bottom:.65rem; outline:none; }
 .video-case-search:focus { border-color:var(--accent); }
 .video-case-grid { display:grid; gap:.65rem; }
-.video-library-launch{background:var(--bg-2);border:1px solid var(--border);border-radius:1rem;padding:1rem;margin-bottom:1rem}.video-library-launch-title{font-weight:700;color:var(--accent);font-size:.95rem}.video-library-launch-sub{font-size:.75rem;color:var(--text-muted);line-height:1.5;margin:.35rem 0 .75rem}.video-library-launch-btn{width:100%;border:1px solid var(--accent);background:var(--bg-3);color:var(--accent);border-radius:.7rem;padding:.7rem;font-weight:700;cursor:pointer}.video-library-launch-btn:active{transform:scale(.99)}.video-field-case-detail{margin-top:1rem}.video-field-detail-card{background:var(--bg-2);border:1px solid var(--border);border-radius:1rem;padding:1rem}.video-field-detail-card h3{margin:.1rem 0 .65rem;color:var(--accent);font-size:1rem}.video-field-detail-card p,.video-field-detail-card li{font-size:.8rem;line-height:1.55;color:var(--text-dim)}.video-field-detail-back{margin-bottom:.8rem}.video-field-cases-screen .field-case-btn{padding:1rem}.video-field-cases-screen .field-case-meta{margin-top:.35rem}
+.video-library-launch{background:var(--bg-2);border:1px solid var(--border);border-radius:1rem;padding:1rem;margin-bottom:1rem}.video-library-launch-title{font-weight:700;color:var(--accent);font-size:.95rem}.video-library-launch-sub{font-size:.75rem;color:var(--text-muted);line-height:1.5;margin:.35rem 0 .75rem}.video-library-launch-btn{width:100%;border:1px solid var(--accent);background:var(--bg-3);color:var(--accent);border-radius:.7rem;padding:.7rem;font-weight:700;cursor:pointer}.video-library-launch-btn:active{transform:scale(.99)}.field-case-action{display:inline-flex;align-items:center;gap:.35rem;margin-top:.7rem;padding:.45rem .65rem;border:1px solid var(--border);border-radius:.55rem;background:var(--bg-3);color:var(--accent);font-size:.72rem;font-weight:700;letter-spacing:.01em}.field-case-btn:hover .field-case-action{border-color:var(--accent)}.video-os-breadcrumb{font-size:.72rem;color:var(--text-muted);margin-bottom:.75rem}.video-os-breadcrumb b{color:var(--accent)}.video-os-launch{margin-top:1rem}.video-os-launch-title{font-size:.9rem;font-weight:700;color:var(--accent)}.video-os-launch-sub{font-size:.78rem;color:var(--text-dim);line-height:1.55;margin:.35rem 0 .75rem}.video-field-case-detail{margin-top:1rem}.video-field-detail-card{background:var(--bg-2);border:1px solid var(--border);border-radius:1rem;padding:1rem}.video-field-detail-card h3{margin:.1rem 0 .65rem;color:var(--accent);font-size:1rem}.video-field-detail-card p,.video-field-detail-card li{font-size:.8rem;line-height:1.55;color:var(--text-dim)}.video-field-detail-back{margin-bottom:.8rem}.video-field-cases-screen .field-case-btn{padding:1rem}.video-field-cases-screen .field-case-meta{margin-top:.35rem}
 .video-case-btn { background:var(--bg-2); border:1px solid var(--border); border-radius:.75rem; padding:.8rem; text-align:left; color:var(--text); cursor:pointer; }
 .video-case-btn:active { transform:scale(.99); background:var(--bg-3); }
 .video-case-title { color:var(--accent); font-size:.84rem; font-weight:700; }
@@ -1193,6 +1192,46 @@ body {
 .video-source-list a { color:var(--accent); text-decoration:none; }
 .video-source-list a:hover { text-decoration:underline; }
 @media (min-width:760px){ .video-preset-grid{grid-template-columns:repeat(2,minmax(0,1fr));} .video-two-col{grid-template-columns:repeat(2,minmax(0,1fr));} .video-idea-grid{grid-template-columns:repeat(2,minmax(0,1fr));} .video-fact-grid{grid-template-columns:repeat(2,minmax(0,1fr));} }
+
+
+/* V18 Video OS + Morning Field Cases */
+.video-start-here{display:grid;gap:.8rem;margin-bottom:1rem}
+.video-start-card{background:var(--bg-2);border:1px solid var(--border);border-radius:1rem;padding:.95rem}
+.video-start-title{color:var(--accent);font-weight:750;font-size:.9rem;margin-bottom:.3rem}
+.video-start-sub{color:var(--text-dim);font-size:.75rem;line-height:1.5;margin-bottom:.7rem}
+.video-preset-quick-grid{display:grid;gap:.55rem}
+.video-preset-quick{display:flex;align-items:center;justify-content:space-between;gap:.75rem;width:100%;text-align:left;background:var(--bg-3);border:1px solid var(--border);border-radius:.7rem;padding:.7rem .75rem;color:var(--text);cursor:pointer}
+.video-preset-quick:hover{border-color:var(--accent)}
+.video-preset-quick:active{transform:scale(.995)}
+.video-preset-quick-main{min-width:0}
+.video-preset-quick-title{font-size:.78rem;font-weight:700;color:var(--accent)}
+.video-preset-quick-meta{font-size:.68rem;color:var(--text-muted);line-height:1.4;margin-top:.18rem}
+.video-preset-open{flex:0 0 auto;font-size:.65rem;font-weight:700;color:var(--accent);border:1px solid var(--border);border-radius:999px;padding:.28rem .5rem;background:var(--bg-2)}
+.video-control-ladder{display:grid;gap:.55rem}
+.video-control-step{display:grid;grid-template-columns:2rem 1fr;gap:.55rem;align-items:start;background:var(--bg-2);border-radius:.65rem;padding:.7rem}
+.video-control-num{width:2rem;height:2rem;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--bg-3);border:1px solid var(--border);color:var(--accent);font-weight:800;font-size:.72rem}
+.video-control-title{font-size:.77rem;font-weight:700;color:var(--text)}
+.video-control-desc{font-size:.72rem;color:var(--text-dim);line-height:1.5;margin-top:.12rem}
+.video-preset-details{margin-top:.65rem;border:1px solid var(--border);border-radius:.65rem;background:var(--bg-3);overflow:hidden}
+.video-preset-details summary{list-style:none;cursor:pointer;padding:.62rem .7rem;color:var(--accent);font-size:.72rem;font-weight:750}
+.video-preset-details summary::-webkit-details-marker{display:none}
+.video-preset-details summary::after{content:'＋';float:right;color:var(--text-muted);font-weight:700}
+.video-preset-details[open] summary::after{content:'−'}
+.video-preset-detail-inner{padding:0 .65rem .65rem}
+.video-preset-tag{display:inline-block;font-size:.6rem;letter-spacing:.03em;text-transform:uppercase;color:var(--text-muted);background:var(--bg-3);border:1px solid var(--border);border-radius:999px;padding:.2rem .45rem;margin-bottom:.45rem}
+.video-exposure-alert{background:rgba(56,189,248,.06);border-left:3px solid var(--accent);border-radius:.5rem;padding:.75rem;color:var(--text-dim);font-size:.77rem;line-height:1.55}
+.video-preflight{display:grid;gap:.5rem}
+.video-preflight-item{display:flex;align-items:flex-start;gap:.6rem;width:100%;border:1px solid var(--border);background:var(--bg-2);border-radius:.6rem;padding:.65rem;text-align:left;color:var(--text);cursor:pointer}
+.video-preflight-item::before{content:'☐';font-size:.95rem;color:var(--text-muted);line-height:1}
+.video-preflight-item.checked{border-color:var(--accent);background:var(--bg-3)}
+.video-preflight-item.checked::before{content:'☑';color:var(--accent)}
+.video-preflight-text{font-size:.75rem;line-height:1.5;color:var(--text-dim)}
+.video-preflight-text b{color:var(--text)}
+.video-rule-grid{display:grid;gap:.65rem}
+.video-rule-card{background:var(--bg-2);border:1px solid var(--border);border-radius:.75rem;padding:.75rem}
+.video-rule-card-title{color:var(--accent);font-size:.76rem;font-weight:750;margin-bottom:.25rem}
+.video-rule-card-text{color:var(--text-dim);font-size:.72rem;line-height:1.5}
+@media (min-width:760px){.video-start-here{grid-template-columns:1fr 2fr}.video-preset-quick-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.video-rule-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 
 </style>
 </head>
@@ -1315,10 +1354,41 @@ body {
 <!-- VIDEO OS -->
 <div id="videoScreen" class="video-screen">
   <div class="video-hero">
+    <div class="video-os-breadcrumb">PHOTO / <b>VIDEO OS</b></div>
     <div class="video-hero-title">🎥 A6000 VIDEO OS</div>
     <div class="video-hero-sub" data-en="Sony A6000 + 50mm F1.8 OSS. A practical Full HD workflow designed around what this camera actually supports." data-vi="Sony A6000 + 50mm F1.8 OSS. Workflow Full HD thực dụng, xây dựng đúng theo những gì chiếc máy này thực sự hỗ trợ.">Sony A6000 + 50mm F1.8 OSS. A practical Full HD workflow designed around what this camera actually supports.</div>
     <div class="video-rule">25p → 1/50s → choose aperture → control ISO → choose focus → lock/choose WB → record<br>50p → 1/100s → use when you want smoother motion / 2× slow motion on a 25p timeline</div>
     <div class="video-alert" data-en="A6000 is a Full HD camera internally. Do not build this workflow around internal 4K. In PAL, XAVC S was enabled by firmware 2.00; Sony's current support page lists firmware 3.21. For XAVC S, use an SDXC Class 10 or faster card and format it in-camera after the required firmware update." data-vi="A6000 là máy quay Full HD nội bộ. Không xây workflow quanh 4K nội bộ. Ở PAL, XAVC S được mở bằng firmware 2.00; trang hỗ trợ hiện tại của Sony liệt kê firmware 3.21. Khi quay XAVC S, dùng thẻ SDXC Class 10 trở lên và format bằng máy sau khi cập nhật firmware cần thiết.">A6000 is a Full HD camera internally. Do not build this workflow around internal 4K. In PAL, XAVC S was enabled by firmware 2.00; Sony's current support page lists firmware 3.21. For XAVC S, use an SDXC Class 10 or faster card and format it in-camera after the required firmware update.</div>
+  </div>
+
+  <div class="video-start-here">
+    <div class="video-start-card">
+      <div class="video-start-title">🧭 <span data-en="VIDEO START HERE" data-vi="BẮT ĐẦU QUAY TỪ ĐÂY">VIDEO START HERE</span></div>
+      <div class="video-start-sub" data-en="Pick the closest shooting situation first. Open the preset only when you need the full setup." data-vi="Chọn tình huống quay gần nhất trước. Chỉ mở preset khi cần xem setup đầy đủ.">Pick the closest shooting situation first. Open the preset only when you need the full setup.</div>
+      <div class="video-rule-grid">
+        <div class="video-rule-card"><div class="video-rule-card-title">25p → 1/50</div><div class="video-rule-card-text" data-en="Default for normal cinematic motion." data-vi="Mặc định cho motion video tự nhiên.">Default for normal cinematic motion.</div></div>
+        <div class="video-rule-card"><div class="video-rule-card-title">50p → 1/100</div><div class="video-rule-card-text" data-en="Use for smoother motion or 2× slow motion on a 25p timeline." data-vi="Dùng cho motion mượt hơn hoặc slow motion 2× trên timeline 25p.">Use for smoother motion or 2× slow motion on a 25p timeline.</div></div>
+        <div class="video-rule-card"><div class="video-rule-card-title">Start at f/2.8</div><div class="video-rule-card-text" data-en="Safer focus margin than always using f/1.8 with this 50mm." data-vi="Dễ giữ nét hơn so với luôn dùng f/1.8 với lens 50mm này.">Safer focus margin than always using f/1.8 with this 50mm.</div></div>
+      </div>
+    </div>
+    <div class="video-start-card">
+      <div class="video-start-title">🎛 <span data-en="CHOOSE YOUR PRESET" data-vi="CHỌN PRESET">CHOOSE YOUR PRESET</span></div>
+      <div class="video-start-sub" data-en="These are the six base workflows. Use one as the starting point, then change only the parameters the shot actually needs." data-vi="Đây là 6 workflow nền. Chọn một preset làm điểm bắt đầu, rồi chỉ đổi những thông số mà shot thực sự cần.">These are the six base workflows. Use one as the starting point, then change only the parameters the shot actually needs.</div>
+      <div class="video-preset-quick-grid">
+        <button class="video-preset-quick" type="button" onclick="openVideoPreset('videoPresetV1')"><div class="video-preset-quick-main"><div class="video-preset-quick-title">🎬 V1 — Everyday Cinematic</div><div class="video-preset-quick-meta" data-en="Cafe · travel · street · everyday B-roll" data-vi="Cafe · du lịch · đường phố · B-roll hằng ngày">Cafe · travel · street · everyday B-roll</div></div><span class="video-preset-open" data-en="OPEN" data-vi="MỞ">OPEN</span></button>
+        <button class="video-preset-quick" type="button" onclick="openVideoPreset('videoPresetV2')"><div class="video-preset-quick-main"><div class="video-preset-quick-title">🌀 V2 — 50p / 2× Slow Motion</div><div class="video-preset-quick-meta" data-en="Water · leaves · casual action · passing people" data-vi="Nước · lá cây · hành động nhẹ · người đi ngang">Water · leaves · casual action · passing people</div></div><span class="video-preset-open" data-en="OPEN" data-vi="MỞ">OPEN</span></button>
+        <button class="video-preset-quick" type="button" onclick="openVideoPreset('videoPresetV3')"><div class="video-preset-quick-main"><div class="video-preset-quick-title">🌙 V3 — Low Light</div><div class="video-preset-quick-meta" data-en="Cafe · evening · night · window light" data-vi="Cafe · chiều tối · ban đêm · ánh sáng cửa sổ">Cafe · evening · night · window light</div></div><span class="video-preset-open" data-en="OPEN" data-vi="MỞ">OPEN</span></button>
+        <button class="video-preset-quick" type="button" onclick="openVideoPreset('videoPresetV4')"><div class="video-preset-quick-main"><div class="video-preset-quick-title">🎞 V4 — Static / Tripod</div><div class="video-preset-quick-meta" data-en="Food · product · decor · controlled B-roll" data-vi="Đồ ăn · sản phẩm · decor · B-roll có kiểm soát">Food · product · decor · controlled B-roll</div></div><span class="video-preset-open" data-en="OPEN" data-vi="MỞ">OPEN</span></button>
+        <button class="video-preset-quick" type="button" onclick="openVideoPreset('videoPresetV5')"><div class="video-preset-quick-main"><div class="video-preset-quick-title">👤 V5 — Talking Head</div><div class="video-preset-quick-meta" data-en="Person speaking · controlled portrait video" data-vi="Người nói · video chân dung có kiểm soát">Person speaking · controlled portrait video</div></div><span class="video-preset-open" data-en="OPEN" data-vi="MỞ">OPEN</span></button>
+        <button class="video-preset-quick" type="button" onclick="openVideoPreset('videoPresetV6')"><div class="video-preset-quick-main"><div class="video-preset-quick-title">🏃 V6 — Moving Subject</div><div class="video-preset-quick-meta" data-en="Walking · follow shots · natural movement" data-vi="Đi bộ · follow shot · chuyển động tự nhiên">Walking · follow shots · natural movement</div></div><span class="video-preset-open" data-en="OPEN" data-vi="MỞ">OPEN</span></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="video-os-launch info-card">
+    <div class="video-os-launch-title">📚 <span data-en="Video Field Case Library" data-vi="Thư Viện Tình Huống Video">Video Field Case Library</span></div>
+    <div class="video-os-launch-sub" data-en="Short cards → open a dedicated detailed case. Photo and Video libraries stay separate." data-vi="Card ngắn → bấm để mở case chi tiết riêng. Thư viện Ảnh và Video được tách riêng.">Short cards → open a dedicated detailed case. Photo and Video libraries stay separate.</div>
+    <button class="video-library-launch-btn" onclick="showScreen('videofieldcases')">📚 <span data-en="OPEN VIDEO FIELD CASES →" data-vi="MỞ TÌNH HUỐNG VIDEO →">OPEN VIDEO FIELD CASES →</span></button>
   </div>
 
   <div class="section-title" data-en="⚡ IF YOU REMEMBER ONLY 5 THINGS" data-vi="⚡ NẾU CHỈ NHỚ 5 ĐIỀU">⚡ IF YOU REMEMBER ONLY 5 THINGS</div>
@@ -1332,47 +1402,47 @@ body {
 
   <div class="section-title" data-en="🎛 VIDEO PRESETS" data-vi="🎛 VIDEO PRESET">🎛 VIDEO PRESETS</div>
   <div class="video-preset-grid">
-    <div class="video-preset-card">
-      <div class="video-preset-title">🎬 V1 — EVERYDAY CINEMATIC BASE</div>
-      <div class="video-preset-use" data-en="Your default setup for cafe, travel, street, people, nature and everyday B-roll." data-vi="Cấu hình mặc định cho cafe, du lịch, đường phố, con người, thiên nhiên và B-roll hằng ngày.">Your default setup for cafe, travel, street, people, nature and everyday B-roll.</div>
-      <div class="video-preset-code">Mode Dial → Movie → Exposure Mode M<br>File Format → XAVC S HD<br>Record Setting → 25p 50M (PAL)<br>Shutter → 1/50s<br>Aperture → f/2.8–4<br>ISO → AUTO<br>Focus → AF-C / appropriate area<br>WB → Auto WB initially<br>Picture Profile → Off<br>SteadyShot → ON handheld<br>Audio Recording → ON</div>
-      <div class="video-preset-note" data-en="Best “take the camera out and shoot” preset. When light is stable, switch ISO to manual for more consistent clips." data-vi="Preset tốt nhất cho kiểu “cầm máy ra ngoài và quay”. Khi ánh sáng ổn định, chuyển ISO sang manual để các clip nhất quán hơn.">Best “take the camera out and shoot” preset. When light is stable, switch ISO to manual for more consistent clips.</div>
-    </div>
+    <div class="video-preset-card" data-preset="V1" id="videoPresetV1">
+<div class="video-preset-title">🎬 V1 — EVERYDAY CINEMATIC BASE</div><div class="video-preset-tag">BASE</div>
+<div class="video-preset-use" data-en="Your default setup for cafe, travel, street, people, nature and everyday B-roll." data-vi="Cấu hình mặc định cho cafe, du lịch, đường phố, con người, thiên nhiên và B-roll hằng ngày.">Your default setup for cafe, travel, street, people, nature and everyday B-roll.</div>
 
-    <div class="video-preset-card">
-      <div class="video-preset-title">🌀 V2 — SMOOTH / 2× SLOW MOTION</div>
-      <div class="video-preset-use" data-en="Walking, leaves, water, passing people, casual action and B-roll you may want to slow down later." data-vi="Đi bộ, lá cây, nước, người đi ngang, hành động nhẹ và B-roll muốn làm chậm sau này.">Walking, leaves, water, passing people, casual action and B-roll you may want to slow down later.</div>
-      <div class="video-preset-code">Mode Dial → Movie → Exposure Mode M<br>Record Setting → 50p 50M (PAL)<br>Shutter → 1/100s<br>Aperture → f/2.8–4<br>ISO → AUTO<br>Focus → AF-C when subject moves<br>WB → Auto / locked WB as needed<br>Picture Profile → Off</div>
-      <div class="video-preset-note" data-en="50p is not slow motion by itself. On a 25p timeline, 50p interpreted/played at 25p gives 2× slow motion." data-vi="50p tự nó không phải slow motion. Trên timeline 25p, footage 50p phát/được diễn giải ở 25p sẽ cho slow motion 2×.">50p is not slow motion by itself. On a 25p timeline, 50p interpreted/played at 25p gives 2× slow motion.</div>
-    </div>
 
-    <div class="video-preset-card">
-      <div class="video-preset-title">🌙 V3 — LOW LIGHT / CAFE / NIGHT</div>
-      <div class="video-preset-use" data-en="Indoor cafe, evening, night street, window light and small illuminated subjects." data-vi="Cafe trong nhà, chiều tối, phố đêm, ánh sáng cửa sổ và các chủ thể nhỏ được chiếu sáng.">Indoor cafe, evening, night street, window light and small illuminated subjects.</div>
-      <div class="video-preset-code">25p 50M (PAL) · 1/50s · f/1.8–2.0 · ISO AUTO<br>AF-S / AF-C depending on subject<br>Auto WB or locked WB<br>Picture Profile → Off<br>SteadyShot → ON handheld</div>
-      <div class="video-preset-note" data-en="Use f/2.0–2.8 when you want a little more focus margin. Do not raise shutter just to make low-light footage look “sharp”." data-vi="Dùng f/2.0–2.8 khi muốn biên độ nét dễ hơn. Đừng tăng shutter chỉ để footage low-light trông “sắc” hơn.">Use f/2.0–2.8 when you want a little more focus margin. Do not raise shutter just to make low-light footage look “sharp”.</div>
-    </div>
+<details class="video-preset-details"><summary>⚙️ <span data-en="Open full setup" data-vi="Mở setup chi tiết">Open full setup</span></summary><div class="video-preset-detail-inner"><div class="video-preset-code">Mode Dial → Movie → Exposure Mode M<br/>File Format → XAVC S HD<br/>Record Setting → 25p 50M (PAL)<br/>Shutter → 1/50s<br/>Aperture → f/2.8–4<br/>ISO → AUTO<br/>Focus → AF-C / appropriate area<br/>WB → Auto WB initially<br/>Picture Profile → Off<br/>SteadyShot → ON handheld<br/>Audio Recording → ON</div><div class="video-preset-note" data-en="Best “take the camera out and shoot” preset. When light is stable, switch ISO to manual for more consistent clips." data-vi="Preset tốt nhất cho kiểu “cầm máy ra ngoài và quay”. Khi ánh sáng ổn định, chuyển ISO sang manual để các clip nhất quán hơn.">Best “take the camera out and shoot” preset. When light is stable, switch ISO to manual for more consistent clips.</div></div></details></div>
 
-    <div class="video-preset-card">
-      <div class="video-preset-title">🎞 V4 — STATIC / TRIPOD CINEMATIC</div>
-      <div class="video-preset-use" data-en="Food, product, architecture, decor, landscape-like compositions and controlled B-roll." data-vi="Đồ ăn, sản phẩm, kiến trúc, decor, bố cục kiểu phong cảnh và B-roll có kiểm soát.">Food, product, architecture, decor, landscape-like compositions and controlled B-roll.</div>
-      <div class="video-preset-code">25p 50M · 1/50s · f/2.8–5.6 · low practical ISO<br>Focus → MF or AF-S<br>SteadyShot → OFF on tripod when appropriate<br>WB → LOCK for consistent sequence<br>Picture Profile → Off / PP6 for an advanced grading-friendly option</div>
-      <div class="video-preset-note" data-en="Pre-focus and keep the camera locked. Record 5–10 seconds even when the shot itself is simple." data-vi="Lấy nét trước và giữ máy ổn định. Ngay cả shot đơn giản cũng nên quay 5–10 giây.">Pre-focus and keep the camera locked. Record 5–10 seconds even when the shot itself is simple.</div>
-    </div>
+    <div class="video-preset-card" data-preset="V2" id="videoPresetV2">
+<div class="video-preset-title">🌀 V2 — SMOOTH / 2× SLOW MOTION</div><div class="video-preset-tag">50P / SLOW MOTION</div>
+<div class="video-preset-use" data-en="Walking, leaves, water, passing people, casual action and B-roll you may want to slow down later." data-vi="Đi bộ, lá cây, nước, người đi ngang, hành động nhẹ và B-roll muốn làm chậm sau này.">Walking, leaves, water, passing people, casual action and B-roll you may want to slow down later.</div>
 
-    <div class="video-preset-card">
-      <div class="video-preset-title">👤 V5 — TALKING HEAD / PERSON</div>
-      <div class="video-preset-use" data-en="A person speaking to camera or a relatively static portrait video." data-vi="Người nói trước máy hoặc video chân dung tương đối tĩnh.">A person speaking to camera or a relatively static portrait video.</div>
-      <div class="video-preset-code">25p 50M · 1/50s · f/2–2.8 · ISO AUTO<br>AF-C · Face Detection as appropriate<br>WB → lock for a controlled sequence<br>SteadyShot → ON handheld / support preferred</div>
-      <div class="video-preset-note" data-en="50mm on APS-C is about 75mm equivalent, so give yourself enough working distance." data-vi="50mm trên APS-C tương đương khoảng 75mm, vì vậy cần chừa đủ khoảng cách làm việc.">50mm on APS-C is about 75mm equivalent, so give yourself enough working distance.</div>
-    </div>
 
-    <div class="video-preset-card">
-      <div class="video-preset-title">🏃 V6 — MOVING SUBJECT / NATURAL MOTION</div>
-      <div class="video-preset-use" data-en="Walking people, follow shots and everyday movement where you still want natural video motion." data-vi="Người đi bộ, follow shot và chuyển động hằng ngày nhưng vẫn muốn motion tự nhiên.">Walking people, follow shots and everyday movement where you still want natural video motion.</div>
-      <div class="video-preset-code">25p 50M · 1/50s · f/2.8–4 · ISO AUTO<br>AF-C · Zone/Wide as appropriate<br>AF Drive Speed → Normal or Fast for active scenes<br>AF Track Duration → High for quickly moving subjects</div>
-      <div class="video-preset-note" data-en="Do not use still-photo logic here: 1/500 is not the default just because the person is moving. For normal cinematic motion, keep about 1/50 at 25p." data-vi="Đừng áp logic chụp ảnh tĩnh vào đây: 1/500 không phải mặc định chỉ vì người đang chuyển động. Với motion cinematic tự nhiên, giữ khoảng 1/50 ở 25p.">Do not use still-photo logic here: 1/500 is not the default just because the person is moving. For normal cinematic motion, keep about 1/50 at 25p.</div>
-    </div>
+<details class="video-preset-details"><summary>⚙️ <span data-en="Open full setup" data-vi="Mở setup chi tiết">Open full setup</span></summary><div class="video-preset-detail-inner"><div class="video-preset-code">Mode Dial → Movie → Exposure Mode M<br/>Record Setting → 50p 50M (PAL)<br/>Shutter → 1/100s<br/>Aperture → f/2.8–4<br/>ISO → AUTO<br/>Focus → AF-C when subject moves<br/>WB → Auto / locked WB as needed<br/>Picture Profile → Off</div><div class="video-preset-note" data-en="50p is not slow motion by itself. On a 25p timeline, 50p interpreted/played at 25p gives 2× slow motion." data-vi="50p tự nó không phải slow motion. Trên timeline 25p, footage 50p phát/được diễn giải ở 25p sẽ cho slow motion 2×.">50p is not slow motion by itself. On a 25p timeline, 50p interpreted/played at 25p gives 2× slow motion.</div></div></details></div>
+
+    <div class="video-preset-card" data-preset="V3" id="videoPresetV3">
+<div class="video-preset-title">🌙 V3 — LOW LIGHT / CAFE / NIGHT</div><div class="video-preset-tag">LOW LIGHT</div>
+<div class="video-preset-use" data-en="Indoor cafe, evening, night street, window light and small illuminated subjects." data-vi="Cafe trong nhà, chiều tối, phố đêm, ánh sáng cửa sổ và các chủ thể nhỏ được chiếu sáng.">Indoor cafe, evening, night street, window light and small illuminated subjects.</div>
+
+
+<details class="video-preset-details"><summary>⚙️ <span data-en="Open full setup" data-vi="Mở setup chi tiết">Open full setup</span></summary><div class="video-preset-detail-inner"><div class="video-preset-code">25p 50M (PAL) · 1/50s · f/1.8–2.0 · ISO AUTO<br/>AF-S / AF-C depending on subject<br/>Auto WB or locked WB<br/>Picture Profile → Off<br/>SteadyShot → ON handheld</div><div class="video-preset-note" data-en="Use f/2.0–2.8 when you want a little more focus margin. Do not raise shutter just to make low-light footage look “sharp”." data-vi="Dùng f/2.0–2.8 khi muốn biên độ nét dễ hơn. Đừng tăng shutter chỉ để footage low-light trông “sắc” hơn.">Use f/2.0–2.8 when you want a little more focus margin. Do not raise shutter just to make low-light footage look “sharp”.</div></div></details></div>
+
+    <div class="video-preset-card" data-preset="V4" id="videoPresetV4">
+<div class="video-preset-title">🎞 V4 — STATIC / TRIPOD CINEMATIC</div><div class="video-preset-tag">STATIC / TRIPOD</div>
+<div class="video-preset-use" data-en="Food, product, architecture, decor, landscape-like compositions and controlled B-roll." data-vi="Đồ ăn, sản phẩm, kiến trúc, decor, bố cục kiểu phong cảnh và B-roll có kiểm soát.">Food, product, architecture, decor, landscape-like compositions and controlled B-roll.</div>
+
+
+<details class="video-preset-details"><summary>⚙️ <span data-en="Open full setup" data-vi="Mở setup chi tiết">Open full setup</span></summary><div class="video-preset-detail-inner"><div class="video-preset-code">25p 50M · 1/50s · f/2.8–5.6 · low practical ISO<br/>Focus → MF or AF-S<br/>SteadyShot → OFF on tripod when appropriate<br/>WB → LOCK for consistent sequence<br/>Picture Profile → Off / PP6 for an advanced grading-friendly option</div><div class="video-preset-note" data-en="Pre-focus and keep the camera locked. Record 5–10 seconds even when the shot itself is simple." data-vi="Lấy nét trước và giữ máy ổn định. Ngay cả shot đơn giản cũng nên quay 5–10 giây.">Pre-focus and keep the camera locked. Record 5–10 seconds even when the shot itself is simple.</div></div></details></div>
+
+    <div class="video-preset-card" data-preset="V5" id="videoPresetV5">
+<div class="video-preset-title">👤 V5 — TALKING HEAD / PERSON</div><div class="video-preset-tag">PERSON</div>
+<div class="video-preset-use" data-en="A person speaking to camera or a relatively static portrait video." data-vi="Người nói trước máy hoặc video chân dung tương đối tĩnh.">A person speaking to camera or a relatively static portrait video.</div>
+
+
+<details class="video-preset-details"><summary>⚙️ <span data-en="Open full setup" data-vi="Mở setup chi tiết">Open full setup</span></summary><div class="video-preset-detail-inner"><div class="video-preset-code">25p 50M · 1/50s · f/2–2.8 · ISO AUTO<br/>AF-C · Face Detection as appropriate<br/>WB → lock for a controlled sequence<br/>SteadyShot → ON handheld / support preferred</div><div class="video-preset-note" data-en="50mm on APS-C is about 75mm equivalent, so give yourself enough working distance." data-vi="50mm trên APS-C tương đương khoảng 75mm, vì vậy cần chừa đủ khoảng cách làm việc.">50mm on APS-C is about 75mm equivalent, so give yourself enough working distance.</div></div></details></div>
+
+    <div class="video-preset-card" data-preset="V6" id="videoPresetV6">
+<div class="video-preset-title">🏃 V6 — MOVING SUBJECT / NATURAL MOTION</div><div class="video-preset-tag">MOVING</div>
+<div class="video-preset-use" data-en="Walking people, follow shots and everyday movement where you still want natural video motion." data-vi="Người đi bộ, follow shot và chuyển động hằng ngày nhưng vẫn muốn motion tự nhiên.">Walking people, follow shots and everyday movement where you still want natural video motion.</div>
+
+
+<details class="video-preset-details"><summary>⚙️ <span data-en="Open full setup" data-vi="Mở setup chi tiết">Open full setup</span></summary><div class="video-preset-detail-inner"><div class="video-preset-code">25p 50M · 1/50s · f/2.8–4 · ISO AUTO<br/>AF-C · Zone/Wide as appropriate<br/>AF Drive Speed → Normal or Fast for active scenes<br/>AF Track Duration → High for quickly moving subjects</div><div class="video-preset-note" data-en="Do not use still-photo logic here: 1/500 is not the default just because the person is moving. For normal cinematic motion, keep about 1/50 at 25p." data-vi="Đừng áp logic chụp ảnh tĩnh vào đây: 1/500 không phải mặc định chỉ vì người đang chuyển động. Với motion cinematic tự nhiên, giữ khoảng 1/50 ở 25p.">Do not use still-photo logic here: 1/500 is not the default just because the person is moving. For normal cinematic motion, keep about 1/50 at 25p.</div></div></details></div>
   </div>
 
   <div class="section-title" data-en="⚙️ HOW TO SET THE CAMERA" data-vi="⚙️ CÁCH SETUP MÁY">⚙️ HOW TO SET THE CAMERA</div>
@@ -1401,7 +1471,17 @@ body {
   </div>
   <div class="info-card"><div class="info-text" data-en="Think of the 180° shutter rule as a starting point, not a law. The important thing is to understand that frame rate controls temporal sampling while shutter controls motion blur per frame." data-vi="Hãy coi quy tắc shutter 180° là điểm bắt đầu, không phải luật cứng. Điều quan trọng là hiểu frame rate quyết định cách lấy mẫu theo thời gian còn shutter quyết định motion blur của từng frame.">Think of the 180° shutter rule as a starting point, not a law. The important thing is to understand that frame rate controls temporal sampling while shutter controls motion blur per frame.</div></div>
 
-  <div class="section-title" data-en="🔍 FOCUS FOR VIDEO" data-vi="🔍 LẤY NÉT KHI QUAY VIDEO">🔍 FOCUS FOR VIDEO</div>
+  
+  <div class="info-card"><div class="section-title" style="margin-top:0" data-en="🪜 VIDEO CONTROL LADDER" data-vi="🪜 THỨ TỰ ĐIỀU KHIỂN VIDEO">🪜 VIDEO CONTROL LADDER</div><div class="video-control-ladder">
+    <div class="video-control-step"><div class="video-control-num">1</div><div><div class="video-control-title" data-en="Frame rate" data-vi="Frame rate">Frame rate</div><div class="video-control-desc" data-en="Choose 25p for normal motion or 50p when you plan smoother motion / slow motion." data-vi="Chọn 25p cho motion bình thường hoặc 50p khi muốn motion mượt hơn / slow motion.">Choose 25p for normal motion or 50p when you plan smoother motion / slow motion.</div></div></div>
+    <div class="video-control-step"><div class="video-control-num">2</div><div><div class="video-control-title" data-en="Shutter" data-vi="Shutter">Shutter</div><div class="video-control-desc" data-en="Start near 1/50 at 25p and 1/100 at 50p. Change it only when you have a deliberate motion-blur reason." data-vi="Bắt đầu khoảng 1/50 ở 25p và 1/100 ở 50p. Chỉ đổi khi bạn có chủ ý về motion blur.">Start near 1/50 at 25p and 1/100 at 50p. Change it only when you have a deliberate motion-blur reason.</div></div></div>
+    <div class="video-control-step"><div class="video-control-num">3</div><div><div class="video-control-title" data-en="Aperture" data-vi="Aperture">Aperture</div><div class="video-control-desc" data-en="Use aperture for depth of field and focus margin. f/2.8 is a safe working default; f/1.8 is a deliberate shallow-DOF choice." data-vi="Dùng khẩu để điều khiển DOF và biên độ nét. f/2.8 là mặc định an toàn; f/1.8 là lựa chọn cố ý để DOF mỏng.">Use aperture for depth of field and focus margin. f/2.8 is a safe working default; f/1.8 is a deliberate shallow-DOF choice.</div></div></div>
+    <div class="video-control-step"><div class="video-control-num">4</div><div><div class="video-control-title" data-en="ISO" data-vi="ISO">ISO</div><div class="video-control-desc" data-en="Use ISO to finish exposure after shutter/aperture are where you want them. Add light before accepting very noisy footage." data-vi="Dùng ISO để hoàn tất exposure sau khi shutter/khẩu đã đúng mục đích. Tăng ánh sáng trước khi chấp nhận footage quá noise.">Use ISO to finish exposure after shutter/aperture are where you want them. Add light before accepting very noisy footage.</div></div></div>
+    <div class="video-control-step"><div class="video-control-num">5</div><div><div class="video-control-title" data-en="Focus" data-vi="Focus">Focus</div><div class="video-control-desc" data-en="AF-C for moving subjects; AF-S/MF for controlled static shots. At f/1.8, re-check focus because the 50mm view is unforgiving." data-vi="AF-C cho chủ thể chuyển động; AF-S/MF cho shot tĩnh có kiểm soát. Ở f/1.8 phải kiểm tra nét kỹ hơn vì góc 50mm khá hẹp.">AF-C for moving subjects; AF-S/MF for controlled static shots. At f/1.8, re-check focus because the 50mm view is unforgiving.</div></div></div>
+    <div class="video-control-step"><div class="video-control-num">6</div><div><div class="video-control-title" data-en="WB / PP / stabilization" data-vi="WB / PP / chống rung">WB / PP / stabilization</div><div class="video-control-desc" data-en="Lock WB when clips belong together, keep PP Off for the easy workflow, and use OSS/SteadyShot according to support." data-vi="Khóa WB khi các clip thuộc cùng một sequence, để PP Off cho workflow dễ nhất, và dùng OSS/SteadyShot tùy cách đỡ máy.">Lock WB when clips belong together, keep PP Off for the easy workflow, and use OSS/SteadyShot according to support.</div></div></div>
+  </div></div>
+
+<div class="section-title" data-en="🔍 FOCUS FOR VIDEO" data-vi="🔍 LẤY NÉT KHI QUAY VIDEO">🔍 FOCUS FOR VIDEO</div>
   <div class="video-fact-grid">
     <div class="video-fact"><div class="video-fact-label">STATIC OBJECT</div><div class="video-fact-value">MF or AF-S. Coffee, product, decor, wall art, tripod shots.</div></div>
     <div class="video-fact"><div class="video-fact-label">MOVING PERSON</div><div class="video-fact-value">AF-C. Use a suitable Focus Area; avoid relying on features from newer Sony bodies that A6000 does not have.</div></div>
@@ -1430,6 +1510,9 @@ body {
     <div class="info-card"><div class="info-text"><b>Histogram</b> → check overall exposure.<br><b>Zebra</b> → useful as a highlight warning; A6000 provides 70–100 and 100+ options.<br><b>Manual exposure</b> → best for consistent sequences.</div></div>
     <div class="info-card"><div class="info-text" data-en="Avoid using a fixed EV number as a video recipe. In M + ISO Auto, control exposure primarily with ISO while keeping shutter/aperture where you need them." data-vi="Không dùng một con số EV cố định làm công thức video. Ở M + ISO Auto, hãy chủ yếu điều khiển phơi sáng bằng ISO trong khi giữ shutter/aperture ở mức cần thiết.">Avoid using a fixed EV number as a video recipe. In M + ISO Auto, control exposure primarily with ISO while keeping shutter/aperture where you need them.</div></div>
   </div>
+
+  <div class="video-exposure-alert"><b data-en="☀️ BRIGHT SUN RULE" data-vi="☀️ QUY TẮC KHI TRỜI QUÁ SÁNG">☀️ BRIGHT SUN RULE</b><br><span data-en="If 1/50 + your desired aperture + lowest practical ISO is still too bright, do not automatically jump to a very fast shutter. Use an ND filter when you want to preserve natural motion blur. The A6000 body does not have a built-in ND filter." data-vi="Nếu 1/50 + khẩu bạn muốn + ISO thấp vẫn quá sáng, đừng tự động tăng shutter quá cao. Dùng ND filter khi muốn giữ motion blur tự nhiên. Thân A6000 không có ND filter tích hợp.">If 1/50 + your desired aperture + lowest practical ISO is still too bright, do not automatically jump to a very fast shutter. Use an ND filter when you want to preserve natural motion blur. The A6000 body does not have a built-in ND filter.</span></div>
+  <div class="video-exposure-alert" style="margin-top:.6rem"><b data-en="💡 50Hz INDOOR LIGHT" data-vi="💡 ĐÈN TRONG NHÀ 50Hz">💡 50Hz INDOOR LIGHT</b><br><span data-en="Start with 25p / 1/50 in a 50Hz environment. If a particular LED or fixture still flickers, change the light source or test a nearby shutter option deliberately rather than assuming the camera is faulty." data-vi="Bắt đầu với 25p / 1/50 trong môi trường 50Hz. Nếu một loại LED/đèn cụ thể vẫn flicker, đổi nguồn sáng hoặc thử một shutter gần đó có chủ ý thay vì mặc định cho rằng máy lỗi.">Start with 25p / 1/50 in a 50Hz environment. If a particular LED or fixture still flickers, change the light source or test a nearby shutter option deliberately rather than assuming the camera is faulty.</span></div>
 
   <div class="section-title" data-en="🧍 STABILIZATION / 50MM STRATEGY" data-vi="🧍 CHỐNG RUNG / CHIẾN LƯỢC 50MM">🧍 STABILIZATION / 50MM STRATEGY</div>
   <div class="video-steps">
@@ -1495,6 +1578,19 @@ body {
     <div class="video-step"><b>Auto Slow Shutter:</b> OFF for a controlled M-mode 25p workflow. When enabled in supported auto modes, Sony can slow shutter in dark scenes; that can reduce noise but introduces more motion blur.</div>
   </div>
 
+  <div class="section-title" data-en="✅ VIDEO PRE-FLIGHT" data-vi="✅ CHECKLIST TRƯỚC KHI QUAY">✅ VIDEO PRE-FLIGHT</div>
+  <div class="info-card"><div class="video-preflight" id="videoPreflightChecklist">
+    <button type="button" class="video-preflight-item" data-video-check="movie" onclick="toggleVideoPreflight(this)"><span class="video-preflight-text" data-en="<b>Movie mode</b> — select your intended video exposure mode." data-vi="<b>Movie mode</b> — chọn chế độ phơi sáng video bạn định dùng."><b>Movie mode</b> — select your intended video exposure mode.</span></button>
+    <button type="button" class="video-preflight-item" data-video-check="record" onclick="toggleVideoPreflight(this)"><span class="video-preflight-text" data-en="<b>XAVC S HD + Record Setting</b> — confirm 25p 50M or 50p 50M before the take." data-vi="<b>XAVC S HD + Record Setting</b> — kiểm tra 25p 50M hoặc 50p 50M trước khi quay."><b>XAVC S HD + Record Setting</b> — confirm 25p 50M or 50p 50M before the take.</span></button>
+    <button type="button" class="video-preflight-item" data-video-check="shutter" onclick="toggleVideoPreflight(this)"><span class="video-preflight-text" data-en="<b>Shutter</b> — 1/50 at 25p or 1/100 at 50p as the starting point." data-vi="<b>Shutter</b> — bắt đầu 1/50 ở 25p hoặc 1/100 ở 50p."><b>Shutter</b> — 1/50 at 25p or 1/100 at 50p as the starting point.</span></button>
+    <button type="button" class="video-preflight-item" data-video-check="aperture" onclick="toggleVideoPreflight(this)"><span class="video-preflight-text" data-en="<b>Aperture</b> — confirm the DOF/focus margin you actually want." data-vi="<b>Aperture</b> — kiểm tra DOF/biên độ nét bạn thực sự muốn."><b>Aperture</b> — confirm the DOF/focus margin you actually want.</span></button>
+    <button type="button" class="video-preflight-item" data-video-check="focus" onclick="toggleVideoPreflight(this)"><span class="video-preflight-text" data-en="<b>Focus</b> — AF-C for moving subjects or AF-S/MF for controlled shots." data-vi="<b>Focus</b> — AF-C cho chủ thể chuyển động hoặc AF-S/MF cho shot có kiểm soát."><b>Focus</b> — AF-C for moving subjects or AF-S/MF for controlled shots.</span></button>
+    <button type="button" class="video-preflight-item" data-video-check="wb" onclick="toggleVideoPreflight(this)"><span class="video-preflight-text" data-en="<b>WB</b> — Auto for changing light, lock it for a connected sequence." data-vi="<b>WB</b> — Auto khi ánh sáng thay đổi, khóa WB khi quay cùng một sequence."><b>WB</b> — Auto for changing light, lock it for a connected sequence.</span></button>
+    <button type="button" class="video-preflight-item" data-video-check="stabilization" onclick="toggleVideoPreflight(this)"><span class="video-preflight-text" data-en="<b>SteadyShot / support</b> — ON handheld; OFF on tripod when appropriate." data-vi="<b>SteadyShot / support</b> — ON khi cầm tay; OFF trên tripod khi phù hợp."><b>SteadyShot / support</b> — ON handheld; OFF on tripod when appropriate.</span></button>
+    <button type="button" class="video-preflight-item" data-video-check="audio" onclick="toggleVideoPreflight(this)"><span class="video-preflight-text" data-en="<b>Audio</b> — verify Audio Rec Level / Audio Level Display and avoid handling noise." data-vi="<b>Audio</b> — kiểm tra Audio Rec Level / Audio Level Display và tránh noise do cầm máy."><b>Audio</b> — verify Audio Rec Level / Audio Level Display and avoid handling noise.</span></button>
+    <button type="button" class="video-preflight-item" data-video-check="test" onclick="toggleVideoPreflight(this)"><span class="video-preflight-text" data-en="<b>5-second test</b> — confirm focus, exposure, WB and sound before the real take." data-vi="<b>Test 5 giây</b> — kiểm tra nét, exposure, WB và âm thanh trước shot chính."><b>5-second test</b> — record one short clip and confirm focus, exposure, WB and sound before the real take.</span></button>
+  </div></div>
+
   <div class="section-title" data-en="🆘 TROUBLESHOOTING" data-vi="🆘 XỬ LÝ LỖI">🆘 TROUBLESHOOTING</div>
   <div class="video-two-col">
     <div class="video-step"><b>Video looks choppy:</b> shutter may be too fast or camera movement too abrupt. Return toward 1/50 at 25p and simplify movement.</div>
@@ -1505,12 +1601,10 @@ body {
     <div class="video-step"><b>Camera shakes:</b> remember 50mm ≈ 75mm equivalent; use support and shorter, simpler moves.</div>
   </div>
 
-  <div class="section-title" data-en="📚 VIDEO FIELD CASE LIBRARY" data-vi="📚 THƯ VIỆN TÌNH HUỐNG VIDEO">📚 VIDEO FIELD CASE LIBRARY</div>
-  <div class="video-library-launch">
-    <div class="video-library-launch-title">🎥 <span data-en="Open Video Field Case Library" data-vi="Mở Thư Viện Tình Huống Video">Open Video Field Case Library</span></div>
-    <div class="video-library-launch-sub" data-en="A dedicated library for video cases, separate from Photo Field Case Library. Search by what you want to film, the lighting condition, or the visual style." data-vi="Thư viện riêng cho các tình huống quay video, tách khỏi Thư Viện Tình Huống Ảnh. Tìm theo thứ bạn muốn quay, điều kiện ánh sáng hoặc phong cách hình ảnh.">A dedicated library for video cases, separate from Photo Field Case Library. Search by what you want to film, the lighting condition, or the visual style.</div>
-    <button class="video-library-launch-btn" onclick="showScreen('videofieldcases')">📚 <span data-en="OPEN VIDEO FIELD CASES" data-vi="MỞ TÌNH HUỐNG VIDEO">OPEN VIDEO FIELD CASES</span></button>
-  </div>
+  <div class="info-card"><div class="info-text" data-en="Need a scenario-specific setup? Use the Video Field Case Library at the top of Video OS." data-vi="Cần setup theo tình huống cụ thể? Dùng Thư Viện Tình Huống Video ở đầu Video OS.">Need a scenario-specific setup? Use the Video Field Case Library at the top of Video OS.</div></div>
+
+  <div class="video-step"><b data-en="Flicker / banding under LED:" data-vi="Flicker / banding dưới đèn LED:">Flicker / banding under LED:</b> <span data-en="Start with 25p / 1/50 in a 50Hz environment. If a particular fixture still flickers, change the light source or test a nearby shutter option deliberately." data-vi="Bắt đầu với 25p / 1/50 trong môi trường 50Hz. Nếu một loại đèn cụ thể vẫn flicker, đổi nguồn sáng hoặc thử shutter gần đó một cách có chủ ý.">Start with 25p / 1/50 in a 50Hz environment. If a particular fixture still flickers, change the light source or test a nearby shutter option deliberately.</span></div>
+  <div class="video-step"><b data-en="Daylight overexposure:" data-vi="Quá sáng ngoài trời:">Daylight overexposure:</b> <span data-en="If you want to keep 1/50 and a wide aperture in bright sun, use an ND filter rather than automatically making the shutter extremely fast." data-vi="Nếu muốn giữ 1/50 và khẩu lớn dưới nắng gắt, dùng ND filter thay vì tự động đẩy shutter lên rất cao.">If you want to keep 1/50 and a wide aperture in bright sun, use an ND filter rather than automatically making the shutter extremely fast.</span></div>
 
   <div class="section-title" data-en="🧭 VIDEO LIMITATIONS — KNOW THEM" data-vi="🧭 GIỚI HẠN VIDEO — PHẢI BIẾT">🧭 VIDEO LIMITATIONS — KNOW THEM</div>
   <div class="video-steps">
@@ -1550,23 +1644,38 @@ body {
 
   <input id="fieldCaseSearch" class="field-library-search" type="search" oninput="filterFieldCases(this.value)" placeholder="Search: night, flower, dark sky, hoa ban đêm..." aria-label="Search field cases">
   <div id="fieldCaseGrid" class="field-case-grid">
+    <button class="field-case-btn" data-keywords="morning warm sun sunny morning road street avenue đường phố buổi sáng nắng ấm hàng cây cây xanh sky bầu trời trees cây road đường dẫn leading lines landscape cảnh quan golden hour soft sun daylight" onclick="showFieldCase('morningWarmRoad')">
+      <div class="field-case-title">🌅 Morning Warm Sun — Tree-Lined Road</div>
+      <div class="field-case-meta" data-en="Warm morning light on a road framed by trees on both sides, with sky + trees + road in one composition." data-vi="Nắng ấm buổi sáng trên con đường có hàng cây hai bên, lấy cả bầu trời + cây + đường trong cùng một bố cục.">Warm morning light on a road framed by trees on both sides, with sky + trees + road in one composition.</div>
+      <div class="field-case-tags"><span class="field-case-tag">morning</span><span class="field-case-tag">warm sun</span><span class="field-case-tag">trees</span><span class="field-case-tag">road</span><span class="field-case-tag">sky</span></div>
+      <div class="field-case-action">OPEN CASE →</div></button>
+    <button class="field-case-btn" data-keywords="sun through trees leaves canopy backlight nắng xuyên tán cây lá ngược sáng morning warm rays light flare" onclick="showFieldCase('sunThroughLeaves')">
+      <div class="field-case-title">☀️ Sun Through Trees — Warm Leaf Light</div>
+      <div class="field-case-meta" data-en="Sunlight breaking through leaves, branches and a bright morning sky." data-vi="Ánh nắng xuyên qua lá, cành cây và bầu trời sáng buổi sớm.">Sunlight breaking through leaves, branches and a bright morning sky.</div>
+      <div class="field-case-tags"><span class="field-case-tag">sunlight</span><span class="field-case-tag">leaves</span><span class="field-case-tag">backlight</span><span class="field-case-tag">morning</span></div>
+      <div class="field-case-action">OPEN CASE →</div></button>
+    <button class="field-case-btn" data-keywords="morning walker person cyclist road human scale street trees người đi bộ người đi xe đạp buổi sáng đường hàng cây" onclick="showFieldCase('morningPeopleRoad')">
+      <div class="field-case-title">🚶 Morning Walker — Human Scale</div>
+      <div class="field-case-meta" data-en="A person or cyclist moving through the tree-lined road to give the scene scale and life." data-vi="Một người đi bộ hoặc đi xe đạp đi qua con đường hàng cây để tạo tỷ lệ và sức sống cho khung cảnh.">A person or cyclist moving through the tree-lined road to give the scene scale and life.</div>
+      <div class="field-case-tags"><span class="field-case-tag">person</span><span class="field-case-tag">walking</span><span class="field-case-tag">road</span><span class="field-case-tag">trees</span></div>
+      <div class="field-case-action">OPEN CASE →</div></button>
     <button class="field-case-btn" data-keywords="aquarium fish cá bể cá hồ cá fish tank aquarium tank thủy sinh cây thủy sinh đá rêu nước water reflection kính glass cá bơi cá cảnh indoor aquarium photography" onclick="showFieldCase('aquariumCase')">
       <div class="field-case-title">🐠 Aquarium / Bể Cá</div>
       <div class="field-case-meta" data-en="Whole aquarium, swimming fish, aquatic plants, rocks, details and illuminated fish against a darker background." data-vi="Toàn bộ bể cá, cá đang bơi, cây thủy sinh, đá, chi tiết và cá được chiếu sáng trên nền tối.">Whole aquarium, swimming fish, aquatic plants, rocks, details and illuminated fish against a darker background.</div>
       <div class="field-case-tags"><span class="field-case-tag">aquarium</span><span class="field-case-tag">fish</span><span class="field-case-tag">bể cá</span><span class="field-case-tag">cá cảnh</span><span class="field-case-tag">aquatic plants</span></div>
-    </button>
+    <div class="field-case-action">OPEN CASE →</div></button>
 <button class="field-case-btn" data-keywords="night đêm ban đêm tối dark sky trời đen dark background nền tối illuminated lit subject chủ thể sáng subject isolation tách chủ thể flower flowers hoa bougainvillea cây cây hoa tree trees cây đèn đường street light lamp shop light neon wet night mưa reflection phản chiếu low key silhouette hoa ban đêm cây ban đêm trời tối đèn đường" onclick="showFieldCase('nightLitSubject')">
       <div class="field-case-title">🌙 Night — Lit Subject / Dark Sky</div>
       <div class="field-case-meta" data-en="Brightly illuminated flowers, trees, signs or other subjects against a very dark night background — the style from your example photo." data-vi="Hoa, cây, biển hiệu hoặc chủ thể được chiếu sáng nổi bật trên nền đêm rất tối — đúng kiểu ảnh bạn vừa đưa làm ví dụ.">Brightly illuminated flowers, trees, signs or other subjects against a very dark night background — the style from your example photo.</div>
       <div class="field-case-tags"><span class="field-case-tag">night</span><span class="field-case-tag">dark sky</span><span class="field-case-tag">lit subject</span><span class="field-case-tag">flowers</span><span class="field-case-tag">street light</span></div>
-    </button>
+    <div class="field-case-action">OPEN CASE →</div></button>
   </div>
   <div id="fieldCaseEmpty" class="field-case-empty" style="display:none" data-en="No matching case yet." data-vi="Chưa có tình huống phù hợp.">No matching case yet.</div>
 </div>
 
 <!-- Field Case: Aquarium / Bể Cá -->
 <div id="aquariumCaseCard" class="scenario-card">
-  <button class="back-btn field-case-back" onclick="showScreen('videofieldcases')">← <span data-en="Back to Video Field Cases" data-vi="Quay Lại Thư Viện Video">Back to Video Field Cases</span></button>
+  <button class="back-btn field-case-back" onclick="showScreen('fieldcases')">← <span data-en="Back to Photo Field Cases" data-vi="Quay Lại Thư Viện Tình Huống Ảnh">Back to Photo Field Cases</span></button>
   <div class="card-header">
     <div class="card-title">🐠 Aquarium / Bể Cá</div>
     <div class="card-subtitle" data-en="A practical recipe for aquarium photography with the A6000 + 50mm F1.8: whole tank, moving fish, plants/details, and illuminated fish against a dark background." data-vi="Công thức thực tế để chụp bể cá bằng A6000 + 50mm F1.8: toàn bể, cá đang bơi, cây/chi tiết và cá được chiếu sáng trên nền tối.">A practical recipe for aquarium photography with the A6000 + 50mm F1.8: whole tank, moving fish, plants/details, and illuminated fish against a dark background.</div>
@@ -1595,6 +1704,63 @@ body {
   <div class="section-card"><div class="step-desc" data-en="Static plant/rock → AF-S or MF. Moving fish → AF-C. If AF hunts in dark water, place Flexible Spot on a lit edge/detail. If it still cannot lock, use MF and pre-focus on the fish's swimming plane." data-vi="Cây/đá tĩnh → AF-S hoặc MF. Cá đang bơi → AF-C. Nếu AF hunting trong vùng nước tối, đặt Flexible Spot vào mép/chi tiết có sáng. Nếu vẫn không khóa, dùng MF và lấy nét trước vào mặt phẳng cá sẽ bơi.">Static plant/rock → AF-S or MF. Moving fish → AF-C. If AF hunts in dark water, place Flexible Spot on a lit edge/detail. If it still cannot lock, use MF and pre-focus on the fish's swimming plane.</div></div>
   <div class="section-title" data-en="🔎 SEARCH KEYWORDS" data-vi="🔎 TỪ KHÓA TÌM KIẾM">🔎 SEARCH KEYWORDS</div>
   <div class="field-case-tags"><span class="field-case-tag">aquarium</span><span class="field-case-tag">fish</span><span class="field-case-tag">fish tank</span><span class="field-case-tag">bể cá</span><span class="field-case-tag">hồ cá</span><span class="field-case-tag">cá cảnh</span><span class="field-case-tag">cá bơi</span><span class="field-case-tag">cây thủy sinh</span><span class="field-case-tag">aquatic plants</span><span class="field-case-tag">reflection</span><span class="field-case-tag">kính</span><span class="field-case-tag">glass</span><span class="field-case-tag">dark aquarium</span></div>
+</div>
+
+
+
+<!-- Field Case: Morning Warm Sun — Tree-Lined Road -->
+<div id="morningWarmRoadCard" class="scenario-card">
+  <button class="back-btn field-case-back" onclick="showScreen('fieldcases')">← <span data-en="Back to Photo Field Cases" data-vi="Quay Lại Thư Viện Tình Huống Ảnh">Back to Photo Field Cases</span></button>
+  <div class="card-header">
+    <div class="card-title">🌅 Morning Warm Sun — Tree-Lined Road</div>
+    <div class="card-subtitle" data-en="The practical recipe for the scene you described: warm morning light, a road, trees on both sides, and a composition that includes sky + trees + road." data-vi="Công thức thực tế cho đúng khung cảnh bạn mô tả: nắng ấm buổi sáng, con đường, hàng cây hai bên và bố cục có bầu trời + cây + đường.">The practical recipe for the scene you described: warm morning light, a road, trees on both sides, and a composition that includes sky + trees + road.</div>
+    <div class="card-badges"><span class="badge">PHOTO</span><span class="badge">MORNING</span><span class="badge">WARM SUN</span><span class="badge">50mm</span></div>
+  </div>
+  <div class="field-case-hero">
+    <div class="field-case-hero-title">🎯 Mục tiêu hình ảnh</div>
+    <div class="field-case-hero-sub">Lấy con đường làm leading line, hai hàng cây tạo khung, bầu trời làm khoảng thở. Với 50mm trên APS-C ≈ 75mm equivalent, nếu không đủ rộng thì lùi lại; có thể đổi sang dọc hoặc ghép 2–3 frame nếu cảnh rất rộng.</div>
+  </div>
+  <div class="section-title">⚡ QUICK SETUP — BẮT ĐẦU TỪ ĐÂY</div>
+  <div class="quick-settings-card"><div class="settings-grid">
+    <div class="setting-item"><div class="setting-label">MODE</div><div class="setting-value">A · MR3</div></div>
+    <div class="setting-item"><div class="setting-label">APERTURE</div><div class="setting-value">f/5.6–8</div></div>
+    <div class="setting-item"><div class="setting-label">ISO</div><div class="setting-value">AUTO · 100–800</div></div>
+    <div class="setting-item"><div class="setting-label">EV</div><div class="setting-value">0 → −0.3</div></div>
+    <div class="setting-item"><div class="setting-label">FOCUS</div><div class="setting-value">AF-S / Wide or Flexible Spot</div></div>
+    <div class="setting-item"><div class="setting-label">WB</div><div class="setting-value">Auto / Cloudy for warmer look</div></div>
+  </div></div>
+  <div class="section-card"><div class="section-card-title">🛣 1. Bầu trời + cây + con đường</div><div class="field-case-setup">A → f/5.6–8 → ISO AUTO 100–800 → EV 0 to −0.3 → AF-S → Auto/Cloudy WB</div><div class="step-desc">Đứng gần giữa đường nhưng ở vị trí an toàn. Để mép đường kéo mắt vào sâu trong ảnh. Giữ đường chân trời hoặc điểm hội tụ ở vị trí có chủ ý; đừng để cây hai bên bị cắt ngọn một cách ngẫu nhiên.</div></div>
+  <div class="section-card"><div class="section-card-title">🌳 2. Hàng cây tạo khung</div><div class="field-case-setup">A → f/4–5.6 → ISO AUTO → AF-S → bố cục đối xứng hoặc lệch 1/3</div><div class="step-desc">Nếu hai hàng cây khá đều nhau, thử bố cục đối xứng để tạo cảm giác sâu và sạch. Nếu một bên đẹp hơn, đặt đường vào 1/3 và dùng tán cây bên kia làm foreground frame.</div></div>
+  <div class="section-card"><div class="section-card-title">☀️ 3. Nắng xuyên qua tán cây</div><div class="field-case-setup">A → f/2.8–4 → ISO AUTO → EV −0.3 to −0.7 → AF-S → Auto/Cloudy WB</div><div class="step-desc">Đưa một phần mặt trời vào gần mép khung thay vì chính giữa. Ưu tiên giữ chi tiết ở vùng lá sáng; nếu highlight bị cháy, giảm EV. Chấp nhận một chút flare nếu nó làm ảnh có cảm giác buổi sáng.</div></div>
+  <div class="section-card"><div class="section-card-title">🚶 4. Thêm người để tạo tỷ lệ</div><div class="field-case-setup">S → 1/320–1/500 s → ISO AUTO 100–3200 → AF-C → Zone → EV 0 to −0.3</div><div class="step-desc">Chờ người đi bộ/xe đạp đi vào vùng đẹp của đường. Đừng đặt chủ thể đúng giữa đường trừ khi bạn muốn bố cục đối xứng. Một người nhỏ trong khung giúp người xem cảm nhận quy mô của hàng cây.</div></div>
+  <div class="section-card"><div class="section-card-title">🛣 5. Đường dẫn mạnh hơn</div><div class="field-case-setup">A → f/5.6 → ISO AUTO → đứng thấp hơn một chút → đường chiếm 1/2–2/3 frame</div><div class="step-desc">Hạ góc máy nhẹ để mặt đường chiếm nhiều diện tích hơn. Tìm vạch đường, mép đường, bóng cây hoặc vùng sáng để tạo thêm leading lines.</div></div>
+  <div class="section-card"><div class="section-card-title">📐 6. Khi 50mm quá hẹp</div><div class="field-case-setup">Lùi lại → đổi vertical → hoặc ghép 2–3 frame</div><div class="step-desc">Đừng cố “nhét” toàn cảnh bằng cách cắt mất hai hàng cây. Với 50mm ≈ 75mm equivalent, khoảng cách chụp quyết định rất nhiều. Nếu vẫn không đủ rộng, đổi sang vertical để lấy thêm trời hoặc ghép nhiều frame thật cẩn thận.</div></div>
+  <div class="section-title">🧭 CÁCH TỰ CHỌN SHOT</div>
+  <div class="info-card"><div class="info-text"><b>Muốn ảnh sâu:</b> dùng f/5.6–8 + leading lines. <b>Muốn ảnh thơ hơn:</b> f/2.8–4 + foreground leaves. <b>Muốn có câu chuyện:</b> thêm một người/xe đạp. <b>Muốn nhấn buổi sáng:</b> ưu tiên ánh sáng xiên và WB Cloudy nếu muốn giữ màu ấm hơn.</div></div>
+  <div class="section-title">🔎 SEARCH KEYWORDS</div>
+  <div class="field-case-tags"><span class="field-case-tag">morning</span><span class="field-case-tag">warm sun</span><span class="field-case-tag">tree-lined road</span><span class="field-case-tag">hàng cây</span><span class="field-case-tag">bầu trời</span><span class="field-case-tag">road</span><span class="field-case-tag">leading lines</span><span class="field-case-tag">sun through trees</span><span class="field-case-tag">morning light</span></div>
+</div>
+
+<!-- Field Case: Sun Through Trees — Warm Leaf Light -->
+<div id="sunThroughLeavesCard" class="scenario-card">
+  <button class="back-btn field-case-back" onclick="showScreen('fieldcases')">← <span data-en="Back to Photo Field Cases" data-vi="Quay Lại Thư Viện Tình Huống Ảnh">Back to Photo Field Cases</span></button>
+  <div class="card-header"><div class="card-title">☀️ Sun Through Trees — Warm Leaf Light</div><div class="card-subtitle">Nắng xuyên lá, flare nhẹ, silhouette và các mảng sáng tối của buổi sáng.</div><div class="card-badges"><span class="badge">PHOTO</span><span class="badge">BACKLIGHT</span><span class="badge">MORNING</span></div></div>
+  <div class="field-case-hero"><div class="field-case-hero-title">🎯 Mục tiêu</div><div class="field-case-hero-sub">Biến ánh nắng thành một phần của composition thay vì chỉ xem nó là nguồn sáng.</div></div>
+  <div class="section-title">⚡ QUICK SETUP</div><div class="field-case-setup">A → f/2.8–4 → ISO AUTO → EV −0.3 to −0.7 → AF-S → Auto/Cloudy WB</div>
+  <div class="section-card"><div class="section-card-title">🌿 Lá sáng + nền tối</div><div class="step-desc">Đặt Flexible Spot lên vùng lá có texture. Giữ highlight còn chi tiết; nếu chủ thể quá phẳng, di chuyển vài bước để ánh sáng xiên hơn.</div></div>
+  <div class="section-card"><div class="section-card-title">☀️ Mặt trời ở mép khung</div><div class="step-desc">Đưa mặt trời gần cạnh khung để giảm vùng cháy và tạo flare có chủ ý. Thử nhiều góc nhỏ thay vì thay đổi setting liên tục.</div></div>
+  <div class="section-card"><div class="section-card-title">🧍 Silhouette</div><div class="step-desc">Đặt người hoặc thân cây trước vùng trời sáng. Đừng cố cứu chi tiết vùng tối nếu mục tiêu là silhouette.</div></div>
+</div>
+
+<!-- Field Case: Morning Walker — Human Scale -->
+<div id="morningPeopleRoadCard" class="scenario-card">
+  <button class="back-btn field-case-back" onclick="showScreen('fieldcases')">← <span data-en="Back to Photo Field Cases" data-vi="Quay Lại Thư Viện Tình Huống Ảnh">Back to Photo Field Cases</span></button>
+  <div class="card-header"><div class="card-title">🚶 Morning Walker — Human Scale</div><div class="card-subtitle">Thêm người hoặc xe đạp vào khung cảnh hàng cây để ảnh có tỷ lệ, nhịp điệu và câu chuyện.</div><div class="card-badges"><span class="badge">PHOTO</span><span class="badge">PEOPLE</span><span class="badge">MORNING</span></div></div>
+  <div class="field-case-hero"><div class="field-case-hero-title">🎯 Mục tiêu</div><div class="field-case-hero-sub">Giữ cảnh lớn, để người nhỏ trong khung đóng vai trò scale/reference.</div></div>
+  <div class="section-title">⚡ QUICK SETUP</div><div class="field-case-setup">S → 1/320 s start → 1/500 s if needed → ISO AUTO → AF-C → Zone → Auto/Cloudy WB</div>
+  <div class="section-card"><div class="section-card-title">🚶 Chờ người đi vào điểm đẹp</div><div class="step-desc">Chọn trước vị trí focus/composition rồi chờ chủ thể đi vào. Cách này dễ hơn việc vừa chạy theo người vừa đổi bố cục.</div></div>
+  <div class="section-card"><div class="section-card-title">🌳 Người dưới tán cây</div><div class="step-desc">Đặt người vào vùng sáng nhỏ giữa hai mảng cây. Nếu mặt người quá tối, đổi vị trí hoặc chờ người bước vào vùng sáng thay vì tăng ISO quá nhiều.</div></div>
+  <div class="section-card"><div class="section-card-title">📐 Tạo chiều sâu</div><div class="step-desc">Giữ một phần foreground lá/cây ở gần lens, người ở middle ground và đường kéo về background.</div></div>
 </div>
 
 <!-- Field Case: Night — Lit Subject / Dark Sky -->
@@ -4262,6 +4428,7 @@ body {
 
 <div id="videoFieldCasesScreen" class="scenario-card video-field-cases-screen">
   <button class="back-btn field-case-back" onclick="showScreen('video')">← <span data-en="Back to Video OS" data-vi="Quay Lại Video OS">Back to Video OS</span></button>
+  <div class="video-os-breadcrumb">VIDEO OS / <b>VIDEO FIELD CASES</b> / SELECT A CASE</div>
   <div class="card-header">
     <div class="card-title">📚 <span data-en="Video Field Case Library" data-vi="Thư Viện Tình Huống Video">Video Field Case Library</span></div>
     <div class="card-subtitle" data-en="Search practical video cases separately from Photo Field Case Library. Each case is built around the A6000 + 50mm F1.8 video workflow." data-vi="Tìm các tình huống quay thực tế riêng với Thư Viện Tình Huống Ảnh. Mỗi case được xây dựng quanh workflow video A6000 + 50mm F1.8.">Search practical video cases separately from Photo Field Case Library. Each case is built around the A6000 + 50mm F1.8 video workflow.</div>
@@ -4269,14 +4436,19 @@ body {
   <div class="info-card"><div class="info-text" data-en="Use keywords such as aquarium, fish, cafe, rain, night, talking, walking, b-roll, reflection, or slow motion." data-vi="Dùng từ khóa như aquarium, fish, cafe, rain, night, talking, walking, b-roll, reflection hoặc slow motion.">Use keywords such as aquarium, fish, cafe, rain, night, talking, walking, b-roll, reflection, or slow motion.</div></div>
   <input id="videoFieldCaseSearch" class="field-library-search" type="search" placeholder="Search: aquarium, fish, cafe, rain, night..." oninput="filterVideoFieldCases(this.value)" aria-label="Search video field cases" data-en="Search: aquarium, fish, cafe, rain, night..." data-vi="Tìm: aquarium, fish, cafe, mưa, đêm...">
   <div id="videoFieldCaseGrid" class="field-case-grid">
-    <button class="field-case-btn" data-keywords="aquarium fish tank fish bể cá hồ cá cá cảnh cá bơi cây thủy sinh aquarium video reflection kính glass indoor cinematic chill" onclick="showVideoFieldCase('aquariumVideo')"><div class="field-case-title">🐠 Aquarium / Bể Cá</div><div class="field-case-meta" data-en="Whole tank, swimming fish, plants/details, dark-background shots, reflection control and simple cinematic movement." data-vi="Toàn bể, cá bơi, cây/chi tiết, cá sáng trên nền tối, xử lý phản chiếu và chuyển động máy đơn giản.">Whole tank, swimming fish, plants/details, dark-background shots, reflection control and simple cinematic movement.</div><div class="field-case-tags"><span class="field-case-tag">VIDEO</span><span class="field-case-tag">aquarium</span><span class="field-case-tag">fish</span></div></button>
-    <button class="field-case-btn" data-keywords="cafe coffee coffee shop cà phê b roll window pour" onclick="showVideoFieldCase('cafe')"><div class="field-case-title">☕ Cafe Cinematic B-roll</div><div class="field-case-meta" data-en="Coffee, hands, window, decor, person by window." data-vi="Cà phê, tay, cửa sổ, decor, người bên cửa sổ.">Coffee, hands, window, decor, person by window.</div></button>
-    <button class="field-case-btn" data-keywords="night dark sky flower tree street light neon đêm trời đen hoa cây đèn đường" onclick="showVideoFieldCase('night')"><div class="field-case-title">🌙 Night — Lit Subject / Dark Background</div><div class="field-case-meta" data-en="Flowers, trees, neon and lamps against dark surroundings." data-vi="Hoa, cây, neon và đèn trên nền tối.">Flowers, trees, neon and lamps against dark surroundings.</div></button>
-    <button class="field-case-btn" data-keywords="overcast cloudy uam am u m trời âm u outdoor trees people" onclick="showVideoFieldCase('overcast')"><div class="field-case-title">☁️ Overcast Outdoor B-roll</div><div class="field-case-meta" data-en="Soft light, trees, sky and people." data-vi="Ánh sáng mềm, cây, trời và con người.">Soft light, trees, sky and people.</div></button>
-    <button class="field-case-btn" data-keywords="rain mưa reflection puddle umbrella window" onclick="showVideoFieldCase('rain')"><div class="field-case-title">🌧 Rain / Reflection</div><div class="field-case-meta" data-en="Umbrellas, wet roads, puddles and rain through glass." data-vi="Dù, đường ướt, vũng nước và mưa qua kính.">Umbrellas, wet roads, puddles and rain through glass.</div></button>
-    <button class="field-case-btn" data-keywords="talking head speaking person vlog nói chuyện vlog face" onclick="showVideoFieldCase('talking')"><div class="field-case-title">👤 Talking Head</div><div class="field-case-meta" data-en="Speaking to camera, indoor or controlled outdoor." data-vi="Nói trước máy, trong nhà hoặc ngoài trời có kiểm soát.">Speaking to camera, indoor or controlled outdoor.</div></button>
-    <button class="field-case-btn" data-keywords="walking person street candid đi bộ người đường phố" onclick="showVideoFieldCase('walking')"><div class="field-case-title">🚶 Person Walking Through Frame</div><div class="field-case-meta" data-en="Let the subject create the movement while the camera stays simple." data-vi="Để chủ thể tạo chuyển động trong khi máy quay chuyển động tối giản.">Let the subject create the movement while the camera stays simple.</div></button>
+    <button class="field-case-btn" data-keywords="morning warm sun sunny morning road street avenue đường phố buổi sáng nắng ấm hàng cây cây xanh sky bầu trời trees cây road đường leading lines landscape cinematic b roll golden hour daylight" onclick="showVideoFieldCase('morningRoad')"><div class="field-case-title">🌅 Morning Warm Sun — Cinematic Road</div><div class="field-case-meta" data-en="Tree-lined road, warm light, sky and slow cinematic movement." data-vi="Con đường hàng cây, nắng ấm, bầu trời và chuyển động máy chậm, điện ảnh.">Tree-lined road, warm light, sky and slow cinematic movement.</div><div class="field-case-tags"><span class="field-case-tag">morning</span><span class="field-case-tag">road</span><span class="field-case-tag">warm sun</span></div><div class="field-case-action">OPEN CASE →</div></button>
+    <button class="field-case-btn" data-keywords="sun through trees leaves canopy pan nắng xuyên tán cây lá slow pan morning warm flare" onclick="showVideoFieldCase('sunCanopy')"><div class="field-case-title">☀️ Sun Through Canopy — Slow Pan</div><div class="field-case-meta" data-en="Slow pan across leaves, branches and warm morning light." data-vi="Lia chậm qua lá, cành cây và ánh nắng ấm buổi sáng.">Slow pan across leaves, branches and warm morning light.</div><div class="field-case-tags"><span class="field-case-tag">sunlight</span><span class="field-case-tag">slow pan</span><span class="field-case-tag">leaves</span></div><div class="field-case-action">OPEN CASE →</div></button>
+    <button class="field-case-btn" data-keywords="morning walker person cyclist road human scale street trees người đi bộ người xe đạp buổi sáng đường hàng cây follow static cinematic" onclick="showVideoFieldCase('morningWalker')"><div class="field-case-title">🚶 Morning Walker — Human Scale B-roll</div><div class="field-case-meta" data-en="Let a walker or cyclist create the movement inside a large tree-lined scene." data-vi="Để người đi bộ hoặc xe đạp tạo chuyển động trong một khung cảnh hàng cây rộng.">Let a walker or cyclist create the movement inside a large tree-lined scene.</div><div class="field-case-tags"><span class="field-case-tag">walking</span><span class="field-case-tag">people</span><span class="field-case-tag">road</span></div><div class="field-case-action">OPEN CASE →</div></button>
+
+    <button class="field-case-btn" data-keywords="aquarium fish tank fish bể cá hồ cá cá cảnh cá bơi cây thủy sinh aquarium video reflection kính glass indoor cinematic chill" onclick="showVideoFieldCase('aquariumVideo')"><div class="field-case-title">🐠 Aquarium / Bể Cá</div><div class="field-case-meta" data-en="Whole tank, swimming fish, plants/details, dark-background shots, reflection control and simple cinematic movement." data-vi="Toàn bể, cá bơi, cây/chi tiết, cá sáng trên nền tối, xử lý phản chiếu và chuyển động máy đơn giản.">Whole tank, swimming fish, plants/details, dark-background shots, reflection control and simple cinematic movement.</div><div class="field-case-tags"><span class="field-case-tag">VIDEO</span><span class="field-case-tag">aquarium</span><span class="field-case-tag">fish</span></div><div class="field-case-action">OPEN CASE →</div></button>
+    <button class="field-case-btn" data-keywords="cafe coffee coffee shop cà phê b roll window pour" onclick="showVideoFieldCase('cafe')"><div class="field-case-title">☕ Cafe Cinematic B-roll</div><div class="field-case-meta" data-en="Coffee, hands, window, decor, person by window." data-vi="Cà phê, tay, cửa sổ, decor, người bên cửa sổ.">Coffee, hands, window, decor, person by window.</div><div class="field-case-action">OPEN CASE →</div></button>
+    <button class="field-case-btn" data-keywords="night dark sky flower tree street light neon đêm trời đen hoa cây đèn đường" onclick="showVideoFieldCase('night')"><div class="field-case-title">🌙 Night — Lit Subject / Dark Background</div><div class="field-case-meta" data-en="Flowers, trees, neon and lamps against dark surroundings." data-vi="Hoa, cây, neon và đèn trên nền tối.">Flowers, trees, neon and lamps against dark surroundings.</div><div class="field-case-action">OPEN CASE →</div></button>
+    <button class="field-case-btn" data-keywords="overcast cloudy uam am u m trời âm u outdoor trees people" onclick="showVideoFieldCase('overcast')"><div class="field-case-title">☁️ Overcast Outdoor B-roll</div><div class="field-case-meta" data-en="Soft light, trees, sky and people." data-vi="Ánh sáng mềm, cây, trời và con người.">Soft light, trees, sky and people.</div><div class="field-case-action">OPEN CASE →</div></button>
+    <button class="field-case-btn" data-keywords="rain mưa reflection puddle umbrella window" onclick="showVideoFieldCase('rain')"><div class="field-case-title">🌧 Rain / Reflection</div><div class="field-case-meta" data-en="Umbrellas, wet roads, puddles and rain through glass." data-vi="Dù, đường ướt, vũng nước và mưa qua kính.">Umbrellas, wet roads, puddles and rain through glass.</div><div class="field-case-action">OPEN CASE →</div></button>
+    <button class="field-case-btn" data-keywords="talking head speaking person vlog nói chuyện vlog face" onclick="showVideoFieldCase('talking')"><div class="field-case-title">👤 Talking Head</div><div class="field-case-meta" data-en="Speaking to camera, indoor or controlled outdoor." data-vi="Nói trước máy, trong nhà hoặc ngoài trời có kiểm soát.">Speaking to camera, indoor or controlled outdoor.</div><div class="field-case-action">OPEN CASE →</div></button>
+    <button class="field-case-btn" data-keywords="walking person street candid đi bộ người đường phố" onclick="showVideoFieldCase('walking')"><div class="field-case-title">🚶 Person Walking Through Frame</div><div class="field-case-meta" data-en="Let the subject create the movement while the camera stays simple." data-vi="Để chủ thể tạo chuyển động trong khi máy quay chuyển động tối giản.">Let the subject create the movement while the camera stays simple.</div><div class="field-case-action">OPEN CASE →</div></button>
   </div>
+  <div id="videoFieldCaseEmpty" class="field-case-empty" style="display:none" data-en="No matching video case yet." data-vi="Chưa có tình huống video phù hợp.">No matching video case yet.</div>
   <div id="videoFieldCaseDetail" class="video-field-case-detail"></div>
 </div>
 
@@ -4441,6 +4613,39 @@ function showVideoFieldCase(name) {
       <div class="section-card"><div class="section-card-title">⚡ Quick Cheat Sheet</div><div class="field-case-setup">General: 25p/1⁄50/F2.8–4 · Fish: 25p/1⁄50/F2.8–4/AF-C · Slow-mo: 50p/1⁄100 · Detail: F1.8–2.8/MF · Dark BG: F1.8–2.8/ISO ~800–1600</div></div>
       <div class="field-case-callout"><b>⭐ Nếu chỉ nhớ một công thức:</b> 25p · 1/50 · F2.8–4 · ISO Auto · AF-C → sau đó chỉ đổi focus/khẩu/ISO theo từng shot.</div>
     </div>`,},
+
+    morningRoad:{title:'🌅 Morning Warm Sun — Cinematic Road',html:`
+      <div class="field-case-hero"><div class="field-case-hero-title">🎯 V-MORNING ROAD — Base Video Preset</div><div class="field-case-hero-sub">Cho cảnh buổi sáng nắng ấm có đường + hai hàng cây + bầu trời. 50mm trên APS-C ≈ 75mm equivalent, nên ưu tiên bố cục gọn và chuyển động chậm.</div></div>
+      <div class="quick-settings-card"><div class="settings-grid">
+        <div class="setting-item"><div class="setting-label">RECORD</div><div class="setting-value">XAVC S HD · 25p · 50M</div></div>
+        <div class="setting-item"><div class="setting-label">SHUTTER</div><div class="setting-value">1/50 s</div></div>
+        <div class="setting-item"><div class="setting-label">APERTURE</div><div class="setting-value">F4–5.6</div></div>
+        <div class="setting-item"><div class="setting-label">ISO</div><div class="setting-value">AUTO · low first</div></div>
+        <div class="setting-item"><div class="setting-label">FOCUS</div><div class="setting-value">AF-S / MF static · AF-C people</div></div>
+        <div class="setting-item"><div class="setting-label">WB / PP</div><div class="setting-value">Lock WB · PP OFF</div></div>
+      </div></div>
+      <div class="section-card"><div class="section-card-title">🛣 1. Establishing — đường + cây + trời</div><div class="field-case-setup">25p → 1/50 → F5.6 → ISO theo ánh sáng → AF-S/MF → WB lock</div><div class="step-desc">Đặt máy cố định 5–10 giây hoặc push-in rất nhẹ. Vì góc nhìn 75mm equivalent khá hẹp, đừng cố làm shot quá rộng; chọn đoạn đường đẹp nhất.</div></div>
+      <div class="section-card"><div class="section-card-title">🌳 2. Tree framing</div><div class="field-case-setup">25p → 1/50 → F4–5.6 → MF/AF-S → slow pan</div><div class="step-desc">Lia rất chậm từ một bên hàng cây xuống điểm hội tụ của con đường. Chỉ lia trong phạm vi nhỏ; 50mm handheld dễ lộ rung.</div></div>
+      <div class="section-card"><div class="section-card-title">☀️ 3. Sun through leaves</div><div class="field-case-setup">25p → 1/50 → F4 → ISO thấp nhất phù hợp → WB lock → ND nếu quá sáng</div><div class="step-desc">Giữ highlight của nắng và lá. Nếu muốn giữ 1/50 mà ánh sáng quá mạnh, dùng ND thay vì đẩy shutter rất cao. Có thể cho flare nhẹ nếu hợp style.</div></div>
+      <div class="section-card"><div class="section-card-title">🚶 4. Walker in the frame</div><div class="field-case-setup">25p → 1/50 → F4 → AF-C → Zone/Wide → WB lock</div><div class="step-desc">Giữ máy đơn giản và để người tạo movement. Không đổi sang 1/500 chỉ vì người đang đi nếu bạn muốn motion tự nhiên.</div></div>
+      <div class="section-card"><div class="section-card-title">🎞 5. 6-shot sequence</div><div class="field-case-setup">1. Road → 2. Tree tunnel → 3. Sun through leaves → 4. Road detail → 5. Walker → 6. End wide</div><div class="step-desc">Mỗi shot khoảng 5–10 giây. Dựng từ wide → medium → detail → human scale rồi kết bằng một shot rộng vừa đủ.</div></div>
+      <div class="section-card"><div class="section-card-title">🎙 6. Sound</div><div class="field-case-setup">Record clean ambience · avoid wind/handling noise</div><div class="step-desc">Buổi sáng đường phố có ambience tốt. Quay thêm 10–20 giây ambience riêng nếu muốn dựng mượt giữa các shot.</div></div>
+      <div class="field-case-callout"><b>⭐ Nếu chỉ nhớ một công thức:</b> 25p · 1/50 · F4–5.6 · ISO Auto · WB lock → giữ máy đơn giản, để ánh sáng và đường dẫn kể câu chuyện.</div>
+    </div>`},
+    sunCanopy:{title:'☀️ Sun Through Canopy — Slow Pan',html:`
+      <div class="field-case-hero"><div class="field-case-hero-title">🎯 V-SUN CANOPY — Slow Pan</div><div class="field-case-hero-sub">Một shot rất đơn giản nhưng dễ đẹp: lá + cành + nắng xiên + bầu trời sáng.</div></div>
+      <div class="quick-settings-card"><div class="settings-grid"><div class="setting-item"><div class="setting-label">RECORD</div><div class="setting-value">25p · 50M</div></div><div class="setting-item"><div class="setting-label">SHUTTER</div><div class="setting-value">1/50 s</div></div><div class="setting-item"><div class="setting-label">APERTURE</div><div class="setting-value">F4</div></div><div class="setting-item"><div class="setting-label">ISO</div><div class="setting-value">AUTO / low</div></div><div class="setting-item"><div class="setting-label">FOCUS</div><div class="setting-value">AF-S / MF</div></div><div class="setting-item"><div class="setting-label">WB</div><div class="setting-value">LOCK</div></div></div></div>
+      <div class="section-card"><div class="section-card-title">🌳 Shot 1 — từ lá sang trời</div><div class="field-case-setup">Start on dark leaves → slow pan → reveal bright sky</div><div class="step-desc">Đừng lia nhanh. Khoảng 5–8 giây là đủ cho một shot dùng được.</div></div>
+      <div class="section-card"><div class="section-card-title">☀️ Shot 2 — flare nhẹ</div><div class="field-case-setup">Sun near frame edge → keep 1/50 → ND if needed</div><div class="step-desc">Cho mặt trời chạm mép khung để có flare nhẹ. Nếu highlight quá mạnh, đổi góc trước khi đổi setting.</div></div>
+      <div class="section-card"><div class="section-card-title">🎯 Focus</div><div class="field-case-setup">Static branch → AF-S/MF</div><div class="step-desc">Nếu AF hunting giữa lá và trời, chuyển MF hoặc chọn một vùng có texture rõ.</div></div>
+    </div>`},
+    morningWalker:{title:'🚶 Morning Walker — Human Scale B-roll',html:`
+      <div class="field-case-hero"><div class="field-case-hero-title">🎯 V-WALKER — Let the Subject Create Movement</div><div class="field-case-hero-sub">Giữ camera đơn giản, để người đi bộ/xe đạp tạo chuyển động trong khung cảnh lớn.</div></div>
+      <div class="quick-settings-card"><div class="settings-grid"><div class="setting-item"><div class="setting-label">RECORD</div><div class="setting-value">25p · 50M</div></div><div class="setting-item"><div class="setting-label">SHUTTER</div><div class="setting-value">1/50 s</div></div><div class="setting-item"><div class="setting-label">APERTURE</div><div class="setting-value">F4–5.6</div></div><div class="setting-item"><div class="setting-label">ISO</div><div class="setting-value">AUTO</div></div><div class="setting-item"><div class="setting-label">FOCUS</div><div class="setting-value">AF-C · Zone/Wide</div></div><div class="setting-item"><div class="setting-label">WB</div><div class="setting-value">LOCK</div></div></div></div>
+      <div class="section-card"><div class="section-card-title">🚶 Static camera</div><div class="field-case-setup">Camera locked → subject crosses frame → 5–10 s</div><div class="step-desc">Đây là shot dễ nhất và rất hợp với 50mm. Chọn trước vùng đẹp trên đường rồi chờ người đi vào.</div></div>
+      <div class="section-card"><div class="section-card-title">🏃 Gentle follow</div><div class="field-case-setup">25p → 1/50 → AF-C → move very slowly</div><div class="step-desc">Chỉ follow khi có đủ khoảng trống để bước ổn định. Vì 50mm ≈ 75mm equivalent, rung sẽ lộ rõ hơn lens wide.</div></div>
+      <div class="section-card"><div class="section-card-title">🌤 Exposure</div><div class="field-case-setup">Keep 1/50 → adjust aperture/ISO → ND when bright</div><div class="step-desc">Nếu ngoài trời nắng mạnh và muốn giữ 1/50, dùng ND filter thay vì tăng shutter quá cao.</div></div>
+    </div>`},
     cafe:{title:'☕ Cafe Cinematic B-roll',html:'<p><b>V1/V3:</b> 25p · 1/50 · F2.8 · ISO Auto. Use static shots or a slow push-in. Coffee/decor: AF-S or MF; use AF-C only when the subject moves.</p>'},
     night:{title:'🌙 Night — Lit Subject / Dark Background',html:'<p><b>V3:</b> 25p · 1/50 · F1.8–2 · ISO Auto. Use street/shop light as the key light and keep the background dark. Do not brighten the whole frame just to reveal the sky.</p>'},
     overcast:{title:'☁️ Overcast Outdoor B-roll',html:'<p><b>V1:</b> 25p · 1/50 · F2.8–4 · ISO Auto. Good for people, greenery and soft portraits. Lock WB for a connected sequence.</p>'},
@@ -4453,7 +4658,33 @@ function showVideoFieldCase(name) {
   detail.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-function clearVideoFieldCase(){ const d=document.getElementById('videoFieldCaseDetail'); if(d)d.innerHTML=''; }
+function clearVideoFieldCase(){ const d=document.getElementById('videoFieldCaseDetail'); if(d)d.innerHTML=''; window.scrollTo({top:0,behavior:'smooth'}); }
+
+function openVideoPreset(id) {
+  const card = document.getElementById(id);
+  if (!card) return;
+  const details = card.querySelector('.video-preset-details');
+  if (details) details.open = true;
+  card.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function toggleVideoPreflight(element) {
+  element.classList.toggle('checked');
+  const states = {};
+  document.querySelectorAll('#videoPreflightChecklist .video-preflight-item').forEach(item => {
+    states[item.dataset.videoCheck] = item.classList.contains('checked');
+  });
+  localStorage.setItem('a6000-video-preflight', JSON.stringify(states));
+}
+
+function loadVideoPreflight() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('a6000-video-preflight') || '{}');
+    document.querySelectorAll('#videoPreflightChecklist .video-preflight-item').forEach(item => {
+      if (saved[item.dataset.videoCheck]) item.classList.add('checked');
+    });
+  } catch (e) {}
+}
 
 function focusVideoSection(id) {
   const target = document.getElementById(id);
@@ -4498,6 +4729,7 @@ window.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+window.addEventListener('DOMContentLoaded', loadVideoPreflight);
 </script>
 
 <!-- Technical Sources Section -->

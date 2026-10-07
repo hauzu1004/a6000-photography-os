@@ -1,4 +1,4 @@
-# A6000 + 50mm Photography OS
+# A6000 + 50mm Photo + Video OS
 
 Progressive Web App for Sony A6000 + 50mm F1.8 OSS
 
@@ -205,3 +205,36 @@ Personal use project for A6000 + 50mm F1.8 photography
 ---
 
 **Made with ❤️ for Sony A6000 photographers**
+
+
+## Local testing (V18)
+
+With Node.js on Windows:
+
+```powershell
+cd "<path-to>\a6000-pwa"
+npx serve . -l 3001
+```
+
+Open `http://localhost:3001`. Service Worker is intentionally disabled on localhost during local testing.
+
+Video flow: `VIDEO` → `A6000 VIDEO OS` → `OPEN VIDEO FIELD CASES →` → choose a short card → `OPEN CASE →` → detailed case.
+
+## V18 Video OS
+
+The Video OS includes a quick-start selector, six base video presets (V1–V6), expandable setup details, exposure/motion rules, focus/WB/audio guidance, a persistent pre-flight checklist, troubleshooting, weather/light guidance, and a separate Video Field Case Library.
+
+
+## V18 Field Cases
+
+### Photo
+- Morning Warm Sun — Tree-Lined Road
+- Sun Through Trees — Warm Leaf Light
+- Morning Walker — Human Scale
+
+### Video
+- Morning Warm Sun — Cinematic Road
+- Sun Through Canopy — Slow Pan
+- Morning Walker — Human Scale B-roll
+
+The Field Case Library keeps cards concise; use **OPEN CASE →** to open the detailed workflow. Photo and Video libraries remain separate.
