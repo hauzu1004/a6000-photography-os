@@ -1,7 +1,8 @@
 {
-  "version": "v18.0.2",
+  "version": "v18.0.3",
   "buildDate": "2026-10-08",
   "changelog": [
+    "Prevented the service worker from caching browser extension and out-of-scope requests.",
     "Activated the GitHub Pages deployment workflow so updates on main publish to the project site.",
     "Fixed GitHub Pages project-site paths for the manifest, icons, service worker, and update checks.",
     "Added Photo Field Case: Morning Warm Sun — Tree-Lined Road with sky + trees + road composition workflow.",
