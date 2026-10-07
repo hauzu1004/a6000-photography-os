@@ -1,4 +1,4 @@
-const APP_VERSION = 'v18.0.2';
+const APP_VERSION = 'v18.0.3';
 const CACHE_NAME = `a6000-os-${APP_VERSION}`;
 
 // Files to cache
@@ -41,35 +41,37 @@ self.addEventListener('activate', event => {
   );
 });
 
-// Fetch event - serve from cache, fallback to network
+// Cache only same-origin HTTP(S) GET requests inside this app's scope.
+// Browser extensions and other out-of-scope requests must be left to the browser.
 self.addEventListener('fetch', event => {
+  const request = event.request;
+  const requestUrl = new URL(request.url);
+  const scopeUrl = new URL(self.registration.scope);
+  const isHttpRequest = requestUrl.protocol === 'http:' || requestUrl.protocol === 'https:';
+  const isInScope = requestUrl.origin === self.location.origin &&
+    requestUrl.pathname.startsWith(scopeUrl.pathname);
+
+  if (!isHttpRequest || !isInScope || request.method !== 'GET') {
+    return;
+  }
+
   event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Cache hit - return response
-        if (response) {
-          return response;
+    caches.match(request).then(async cachedResponse => {
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+
+      const response = await fetch(request);
+      if (response && response.ok && response.type === 'basic') {
+        try {
+          const cache = await caches.open(CACHE_NAME);
+          await cache.put(request, response.clone());
+        } catch (error) {
+          console.warn('[ServiceWorker] Cache write failed:', error);
         }
-
-        // Clone the request
-        const fetchRequest = event.request.clone();
-
-        return fetch(fetchRequest).then(response => {
-          // Check if valid response
-          if (!response || response.status !== 200 || response.type !== 'basic') {
-            return response;
-          }
-
-          // Clone the response
-          const responseToCache = response.clone();
-
-          caches.open(CACHE_NAME).then(cache => {
-            cache.put(event.request, responseToCache);
-          });
-
-          return response;
-        });
-      })
+      }
+      return response;
+    })
   );
 });
 
