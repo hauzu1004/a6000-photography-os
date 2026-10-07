@@ -1,12 +1,12 @@
 {
-  "version": "v18.0.1",
+  "version": "v18.0.2",
   "buildDate": "2026-10-08",
   "changelog": [
-    "Fixed GitHub Pages project-site paths for manifest, icons, service worker, and update checks.",
+    "Activated the GitHub Pages deployment workflow so updates on main publish to the project site.",
+    "Fixed GitHub Pages project-site paths for the manifest, icons, service worker, and update checks.",
     "Added Photo Field Case: Morning Warm Sun — Tree-Lined Road with sky + trees + road composition workflow.",
     "Added Photo Field Cases: Sun Through Trees and Morning Walker — Human Scale.",
     "Added Video Field Cases: Morning Warm Sun — Cinematic Road, Sun Through Canopy — Slow Pan, and Morning Walker — Human Scale B-roll.",
-    "Kept Photo and Video Field Case Libraries separate with concise cards and detailed case actions.",
-    "Fixed service-worker cache version alignment to v18.0.0 for production updates."
+    "Kept Photo and Video Field Case Libraries separate with concise cards and detailed case actions."
   ]
 }
