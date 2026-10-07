@@ -220,7 +220,7 @@ Open `http://localhost:3001`. Service Worker is intentionally disabled on localh
 
 Video flow: `VIDEO` → `A6000 VIDEO OS` → `OPEN VIDEO FIELD CASES →` → choose a short card → `OPEN CASE →` → detailed case.
 
-## V18 Video OS
+## V19 Photo + Video OS
 
 The Video OS includes a quick-start selector, six base video presets (V1–V6), expandable setup details, exposure/motion rules, focus/WB/audio guidance, a persistent pre-flight checklist, troubleshooting, weather/light guidance, and a separate Video Field Case Library.
 
@@ -238,3 +238,8 @@ The Video OS includes a quick-start selector, six base video presets (V1–V6), 
 - Morning Walker — Human Scale B-roll
 
 The Field Case Library keeps cards concise; use **OPEN CASE →** to open the detailed workflow. Photo and Video libraries remain separate.
+
+
+## V19 Photo OS
+
+Phase 1 consolidates the Photo OS around a scene-first Start Here decision layer, MR1/MR2/MR3 base selection, a Photo Control Ladder, Photo Quick Rules, and the existing Photo Field Case Library.
