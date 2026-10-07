@@ -2,12 +2,12 @@
   "name": "A6000 + 50mm Photography OS",
   "short_name": "A6000 OS",
   "description": "Complete photography and video operating system for Sony A6000 + 50mm F1.8",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#05070C",
   "theme_color": "#38BDF8",
   "orientation": "portrait-primary",
-  "scope": "/",
+  "scope": "./",
   "icons": [
     {
       "src": "icon-192.png",
@@ -22,7 +22,11 @@
       "purpose": "any maskable"
     }
   ],
-  "categories": ["photography", "education", "utilities"],
+  "categories": [
+    "photography",
+    "education",
+    "utilities"
+  ],
   "lang": "en-US",
   "dir": "ltr"
 }
