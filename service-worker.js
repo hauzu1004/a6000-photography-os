@@ -1,4 +1,4 @@
-const APP_VERSION = 'v18.0.1';
+const APP_VERSION = 'v18.0.2';
 const CACHE_NAME = `a6000-os-${APP_VERSION}`;
 
 // Files to cache
