@@ -1,5 +1,10 @@
 # Changelog
 
+## v21.0.1 — 2026-10-11
+
+- Added the bilingual Sony A6000 in-camera “Hanoi Morning Film” JPEG recipe to the Morning Warm Sun — Tree-Lined Road photo case.
+- Included Creative Style, WB shift, exposure guidance, optional Autumn Leaves comparison, and a warning before overwriting an MR memory slot.
+
 ## v21.0.0 — 2026-10-08
 
 - Completed the V19–V21 navigation, field tools and maintenance scope in one release.
