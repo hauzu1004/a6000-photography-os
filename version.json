@@ -1,7 +1,8 @@
 {
-  "version": "v21.0.0",
-  "buildDate": "2026-10-08",
+  "version": "v21.0.1",
+  "buildDate": "2026-10-11",
   "changelog": [
+    "V21.0.1: Added bilingual Sony A6000 in-camera Hanoi Morning Film JPEG recipe to the Morning Warm Sun photo case, with Creative Style, WB shift, exposure guidance and safe MR-slot saving.",
     "V21: searchable bilingual catalog, light/subject/purpose filters, field workflows, saved photo and video preflight, version display and user-controlled updates.",
     "Separated styling, application logic and video case data; added release validation, service worker regression checks and deployment artifact staging.",
     "Roadmap Phase 1: dedicated Photo OS Start Here layer.",
