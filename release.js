@@ -1,1 +1,1 @@
-window.A6000_RELEASE = {"version":"v21.0.0","date":"2026-10-08"};
+window.A6000_RELEASE = {"version":"v21.0.1","date":"2026-10-11"};
