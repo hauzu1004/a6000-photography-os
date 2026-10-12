@@ -1,5 +1,10 @@
 # Changelog
 
+## v21.0.2 — 2026-10-12
+
+- Added a bilingual Passport Photo 4×6 cm field case for Sony A6000 + 50mm F1.8.
+- Included camera setup, lighting, pose, exposure, crop, print/export and links to official Vietnamese passport-photo requirements.
+
 ## v21.0.1 — 2026-10-11
 
 - Added the bilingual Sony A6000 in-camera “Hanoi Morning Film” JPEG recipe to the Morning Warm Sun — Tree-Lined Road photo case.
