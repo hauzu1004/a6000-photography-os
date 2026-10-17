@@ -10,6 +10,11 @@ async function ui(){
  w.showScreen('video');assert.equal(w.document.getElementById('homeScreen').style.display,'none');
  w.showFieldCase('morningWarmRoad');assert.ok(w.document.getElementById('morningWarmRoadCard').classList.contains('active'));assert.ok(!w.document.getElementById('videoScreen').classList.contains('active'));
 
+ const parkCard=w.document.getElementById('parkWalkCard');
+ assert.ok(parkCard,'Missing Park Walk detail card');
+ assert.ok(parkCard.querySelectorAll('.section-card').length>=40,'Park Walk should have at least 40 scenes');
+ assert.ok(parkCard.textContent.includes('Panorama Stitch'),'Park Walk panorama scene missing');
+ assert.ok(parkCard.textContent.includes('Handheld Night Walk'),'Park Walk night scene missing');
  const photoCaseButtons=[...w.document.querySelectorAll('#fieldCaseGrid .field-case-btn')];
  assert.ok(photoCaseButtons.length>=10,'Expected all photo field cases including sunset, plants, and wedding');
  for(const caseButton of photoCaseButtons){

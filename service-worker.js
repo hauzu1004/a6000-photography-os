@@ -1,4 +1,4 @@
-const APP_VERSION = 'v21.0.9';
+const APP_VERSION = 'v21.0.10';
 const BASE = new URL('./', self.location.href);
 const CACHE_PREFIX = `a6000-field-${BASE.pathname}-`;
 const CACHE_NAME = CACHE_PREFIX + APP_VERSION;

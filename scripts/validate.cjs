@@ -26,6 +26,8 @@ const scenarioCards=[...doc.querySelectorAll('.scenario-card')];
 for(const card of scenarioCards){
  assert.ok(!card.parentElement.closest('.scenario-card'),'Nested scenario card hides content/navigation: '+card.id);
 }
+assert.ok(doc.getElementById('parkWalkCard'),'Missing Park Walk detail card');
+assert.ok(doc.getElementById('parkWalkCard').querySelectorAll('.section-card').length>=40,'Park Walk scene coverage is incomplete');
 for(const button of doc.querySelectorAll('#fieldCaseGrid .field-case-btn')){
  const match=(button.getAttribute('onclick')||'').match(/showFieldCase\('([^']+)'\)/);
  if(!match)continue;

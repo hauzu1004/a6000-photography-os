@@ -1,5 +1,10 @@
 # Changelog
 
+## v21.0.10 — 2026-10-18
+
+- Added Park Walk — All-Weather Scene Guide with 40 bilingual photography scenes and scene-specific presets.
+- Covers paths, sunlight, hard noon shadows, open shade, overcast, highlights, backlight, flare, foliage, flowers, ponds, rain, people, movement, pets, groups, picnic, panorama, mist, blue hour, park lamps, night portraits, reflections and light trails.
+
 ## v21.0.9 — 2026-10-17
 
 - Moved every Photo Field Case button inside the searchable field-case grid; this fixes missing cards in the grid and global field-case filtering.

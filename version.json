@@ -1,7 +1,8 @@
 {
-  "version": "v21.0.9",
-  "buildDate": "2026-10-17",
+  "version": "v21.0.10",
+  "buildDate": "2026-10-18",
   "changelog": [
+    "V21.0.10: Added Park Walk — All-Weather Scene Guide with 40 detailed scenes and A6000 + 50mm F1.8 presets for sun, shade, backlight, overcast, rain, motion, blue hour and night.",
     "V21.0.9: Corrected Photo Field Case grid structure so every case button, including sunset, plant, waterfront, passport and wedding, appears inside the searchable grid.",
     "V21.0.8: Repaired four nested photo Field Cases so they open and return correctly; hardened navigation against missing or nested cards; expanded sunset reflections and added bilingual Wedding Guest presets.",
     "V21.0.7: Self-healing update UI recreates Check Update and update notice elements when an older cached index.html lacks them; bumps cache version to recover affected installs.",
