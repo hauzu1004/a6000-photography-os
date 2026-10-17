@@ -1,13 +1,13 @@
 (() => {
-  const loadedVersion = window.A6000_RELEASE.version;
+  const loadedVersion = window.A6000_RELEASE?.version || 'unknown';
   const button = document.getElementById('checkUpdate');
   const notice = document.getElementById('updateNotice');
   const label = document.getElementById('releaseLabel');
   const t = (en,vi) => document.documentElement.lang === 'vi' ? vi : en;
   let registration, refreshRequested = false, checking = false;
-  function status(text) { label.textContent = loadedVersion + ' · ' + text; }
+  function status(text) { if (label) label.textContent = loadedVersion + ' · ' + text; }
   function offerUpdate() {
-    if (!registration?.waiting || !registration.active) return;
+    if (!notice || !registration?.waiting || !registration.active) return;
     notice.replaceChildren();notice.hidden=false;
     const message=document.createElement('span');message.textContent=t('A new version is ready. Your saved checklists will be kept.','Có phiên bản mới. Checklist đã lưu sẽ được giữ lại.');
     const apply=document.createElement('button');apply.type='button';apply.textContent=t('Update now','Cập nhật ngay');
@@ -17,7 +17,7 @@
   }
   async function check() {
     if (checking) return;
-    checking=true;button.disabled=true;status(t('Checking…','Đang kiểm tra…'));
+    checking=true;if(button)button.disabled=true;status(t('Checking…','Đang kiểm tra…'));
     try {
       if (!navigator.onLine) throw new Error('offline');
       await registration?.update();
@@ -28,14 +28,14 @@
       status(data.version===loadedVersion?t('Up to date','Đã cập nhật'):t('New release: '+data.version,'Bản mới: '+data.version));
       offerUpdate();
     } catch (error) {status(navigator.onLine?t('Update check unavailable; try again','Chưa kiểm tra được; hãy thử lại'):t('Offline','Ngoại tuyến'));}
-    finally {checking=false;button.disabled=false;}
+    finally {checking=false;if(button)button.disabled=false;}
   }
-  button.addEventListener('click',check);
+  if (button) button.addEventListener('click',check);
   window.addEventListener('online',check);
   window.addEventListener('offline',()=>status(t('Offline','Ngoại tuyến')));
   document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')check();});
   if ('serviceWorker' in navigator && window.isSecureContext) {
-    navigator.serviceWorker.addEventListener('controllerchange',()=>{notice.hidden=true;if(refreshRequested)location.reload();});
+    navigator.serviceWorker.addEventListener('controllerchange',()=>{if(notice)notice.hidden=true;if(refreshRequested)location.reload();});
     navigator.serviceWorker.register('./service-worker.js',{updateViaCache:'none'}).then(reg=>{
       registration=reg;offerUpdate();
       reg.addEventListener('updatefound',()=>{const worker=reg.installing;worker?.addEventListener('statechange',()=>{if(worker.state==='installed')offerUpdate();});});
