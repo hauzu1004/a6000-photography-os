@@ -1,5 +1,10 @@
 # Changelog
 
+## v21.0.3 — 2026-10-17
+
+- Added a bilingual Waterfront Café — Golden Hour photo field case with four compositions: lifestyle foreground, skyline/lamppost, coffee detail, and cinematic silhouette.
+- Included Sony A6000 + 50mm F1.8 exposure presets, framing tips, highlight control and DRO guidance.
+
 ## v21.0.2 — 2026-10-12
 
 - Added a bilingual Passport Photo 4×6 cm field case for Sony A6000 + 50mm F1.8.
