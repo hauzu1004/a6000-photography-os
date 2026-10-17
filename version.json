@@ -1,7 +1,8 @@
 {
-  "version": "v21.0.5",
+  "version": "v21.0.6",
   "buildDate": "2026-10-17",
   "changelog": [
+    "V21.0.6: Added bilingual Sunset — Color, Silhouette & Foreground Photo Field Case with sunset color, silhouette, layered lifestyle and blue-hour presets.",
     "V21.0.5: Added bilingual Backlit Ornamental Plant — Leaf Glow photo field case with four exposure presets, composition, focus, highlight control and accessory guidance.",
     "V21.0.4: Fixed missing update-control elements that stopped pwa.js before service-worker registration; added visible Check Update UI and a one-time service-worker recovery activation.",
     "V21.0.3: Added a bilingual Waterfront Café — Golden Hour photo field case with four compositions and Sony A6000 + 50mm F1.8 exposure presets.",
