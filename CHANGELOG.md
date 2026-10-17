@@ -1,5 +1,11 @@
 # Changelog
 
+## v21.0.4 — 2026-10-17
+
+- Fixed missing `checkUpdate`, `updateNotice`, and `releaseLabel` elements that caused `pwa.js` to stop before registering the service worker.
+- Added a visible Check Update control and update notice styling.
+- Added a one-time service-worker recovery activation so existing cached installs can receive the fix.
+
 ## v21.0.3 — 2026-10-17
 
 - Added a bilingual Waterfront Café — Golden Hour photo field case with four compositions: lifestyle foreground, skyline/lamppost, coffee detail, and cinematic silhouette.
