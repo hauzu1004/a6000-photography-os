@@ -1,5 +1,10 @@
 # Changelog
 
+## v21.0.5 — 2026-10-17
+
+- Added bilingual Photo Field Case: Backlit Ornamental Plant — Leaf Glow.
+- Included four presets for leaf glow, translucent veins, silhouette and soft rim light, plus composition, highlight protection, focus and accessory tips.
+
 ## v21.0.4 — 2026-10-17
 
 - Fixed missing `checkUpdate`, `updateNotice`, and `releaseLabel` elements that caused `pwa.js` to stop before registering the service worker.
