@@ -1,5 +1,10 @@
 # Changelog
 
+## v21.0.9 — 2026-10-17
+
+- Moved every Photo Field Case button inside the searchable field-case grid; this fixes missing cards in the grid and global field-case filtering.
+- Refreshed release, package and service-worker cache versions after the layout correction.
+
 ## v21.0.8 — 2026-10-17
 
 - Repaired invalid DOM nesting that placed Waterfront Café, Sunset, Backlit Plant and Passport Photo cases inside Aquarium.
