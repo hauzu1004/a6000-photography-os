@@ -1,6 +1,6 @@
 {
   "name": "a6000-photography-os",
-  "version": "21.0.7",
+  "version": "21.0.8",
   "description": "Progressive Web App for Sony A6000 + 50mm F1.8 photography",
   "scripts": {
     "start": "npm run build && node scripts/serve.cjs",

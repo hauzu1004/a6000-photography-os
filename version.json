@@ -1,7 +1,8 @@
 {
-  "version": "v21.0.7",
+  "version": "v21.0.8",
   "buildDate": "2026-10-17",
   "changelog": [
+    "V21.0.8: Repaired four nested photo Field Cases so they open and return correctly; hardened navigation against missing or nested cards; expanded sunset reflections and added bilingual Wedding Guest presets.",
     "V21.0.7: Self-healing update UI recreates Check Update and update notice elements when an older cached index.html lacks them; bumps cache version to recover affected installs.",
     "V21.0.6: Added bilingual Sunset — Color, Silhouette & Foreground Photo Field Case with sunset color, silhouette, layered lifestyle and blue-hour presets.",
     "V21.0.5: Added bilingual Backlit Ornamental Plant — Leaf Glow photo field case with four exposure presets, composition, focus, highlight control and accessory guidance.",

@@ -1,5 +1,12 @@
 # Changelog
 
+## v21.0.8 — 2026-10-17
+
+- Repaired invalid DOM nesting that placed Waterfront Café, Sunset, Backlit Plant and Passport Photo cases inside Aquarium.
+- Hardened photo-case navigation and added safeguards for missing/nested detail cards.
+- Expanded sunset presets with water reflections and added a bilingual Wedding Guest case for couple portraits, candid moments, group photos, low-light reception and details.
+- Added validation and UI tests for every Photo Field Case route, its detail content and back navigation.
+
 ## v21.0.7 — 2026-10-17
 
 - Added a self-healing fallback in `pwa.js` that recreates the Check Update button and update notice when an older cached HTML page lacks them.

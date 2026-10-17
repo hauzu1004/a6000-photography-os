@@ -79,22 +79,33 @@ function showScreen(screenName) {
 }
 
 function showScenario(scenarioName) {
+  const target = document.getElementById(scenarioName + 'Card');
+  if (!target) {
+    console.warn('[A6000] Missing photo scenario card:', scenarioName);
+    showScreen('home');
+    return false;
+  }
+  if (target.parentElement?.closest('.scenario-card')) document.body.appendChild(target);
   showScreen('none');
-  document.getElementById('homeScreen').style.display = 'none';
   setMainTab('photo');
-  document.querySelectorAll('.scenario-card').forEach(card => card.classList.remove('active'));
-  document.getElementById(scenarioName + 'Card').classList.add('active');
+  target.classList.add('active');
   window.scrollTo(0, 0);
+  return true;
 }
 
 function showFieldCase(caseName) {
-  showScreen('none');
-  document.getElementById('homeScreen').style.display = 'none';
-  setMainTab('photo');
-  document.querySelectorAll('.scenario-card').forEach(card => card.classList.remove('active'));
   const target = document.getElementById(caseName + 'Card');
-  if (target) target.classList.add('active');
+  if (!target) {
+    console.warn('[A6000] Missing field case card:', caseName);
+    showScreen('fieldcases');
+    return false;
+  }
+  if (target.parentElement?.closest('.scenario-card')) document.body.appendChild(target);
+  showScreen('none');
+  setMainTab('photo');
+  target.classList.add('active');
   window.scrollTo(0, 0);
+  return true;
 }
 
 function normalizeSearchText(value) {

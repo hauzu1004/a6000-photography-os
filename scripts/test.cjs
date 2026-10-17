@@ -9,6 +9,24 @@ async function ui(){
  assert.ok(w.document.getElementById('homeScreen').contains(w.document.querySelector('.photo-os-hero')));
  w.showScreen('video');assert.equal(w.document.getElementById('homeScreen').style.display,'none');
  w.showFieldCase('morningWarmRoad');assert.ok(w.document.getElementById('morningWarmRoadCard').classList.contains('active'));assert.ok(!w.document.getElementById('videoScreen').classList.contains('active'));
+
+ const photoCaseButtons=[...w.document.querySelectorAll('#fieldCaseGrid .field-case-btn')];
+ assert.ok(photoCaseButtons.length>=10,'Expected all photo field cases including sunset, plants, and wedding');
+ for(const caseButton of photoCaseButtons){
+  const match=(caseButton.getAttribute('onclick')||'').match(/showFieldCase\('([^']+)'\)/);
+  if(!match)continue;
+  const key=match[1],card=w.document.getElementById(key+'Card');
+  assert.ok(card,'Missing detail card for '+key);
+  assert.ok(card.textContent.trim().length>300,'Empty field case: '+key);
+  assert.ok(card.querySelector('.back-btn'),'Missing back button: '+key);
+  w.showFieldCase(key);
+  assert.ok(card.classList.contains('active'),'Field case failed to open: '+key);
+  assert.equal(card.parentElement.closest('.scenario-card'),null,'Field case still nested: '+key);
+  w.showScreen('fieldcases');
+  assert.ok(w.document.getElementById('fieldCasesScreen').classList.contains('active'),'Back navigation failed: '+key);
+  assert.ok(!card.classList.contains('active'),'Back navigation left detail visible: '+key);
+ }
+
  const search=w.document.getElementById('globalSearch');search.value='aquarium';search.dispatchEvent(new w.Event('input'));
  const results=[...w.document.querySelectorAll('#resultList button')];assert.ok(results.some(n=>n.textContent.includes('Aquarium')),'Search finds hidden cases');
  results.find(n=>n.textContent.startsWith('🎥')).click();assert.ok(w.document.getElementById('videoFieldCaseDetail').textContent.includes('AQUARIUM'));
