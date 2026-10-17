@@ -1,4 +1,42 @@
 (() => {
+  // Self-heal the update UI if an older cached index.html does not contain it.
+  let toolsBar = document.querySelector('.release-tools');
+  if (!document.getElementById('checkUpdate')) {
+    if (!toolsBar) {
+      toolsBar = document.createElement('div');
+      toolsBar.className = 'release-tools';
+      toolsBar.setAttribute('aria-live', 'polite');
+      const nav = document.querySelector('.main-tabs');
+      if (nav?.parentNode) nav.parentNode.insertBefore(toolsBar, nav);
+      else document.body.prepend(toolsBar);
+    }
+    if (!document.getElementById('releaseLabel')) {
+      const releaseLabel = document.createElement('span');
+      releaseLabel.id = 'releaseLabel';
+      releaseLabel.className = 'release-label';
+      releaseLabel.textContent = 'A6000 OS · ' + (window.A6000_RELEASE?.version || 'update');
+      toolsBar.appendChild(releaseLabel);
+    }
+    const updateButton = document.createElement('button');
+    updateButton.id = 'checkUpdate';
+    updateButton.className = 'release-update-btn';
+    updateButton.type = 'button';
+    updateButton.textContent = document.documentElement.lang === 'vi' ? 'Kiểm tra cập nhật' : 'Check Update';
+    updateButton.setAttribute('data-en', 'Check Update');
+    updateButton.setAttribute('data-vi', 'Kiểm tra cập nhật');
+    toolsBar.appendChild(updateButton);
+  }
+  if (!document.getElementById('updateNotice')) {
+    const updateNotice = document.createElement('div');
+    updateNotice.id = 'updateNotice';
+    updateNotice.className = 'update-notice';
+    updateNotice.hidden = true;
+    updateNotice.setAttribute('role', 'status');
+    const nav = document.querySelector('.main-tabs');
+    if (nav?.parentNode) nav.parentNode.insertBefore(updateNotice, nav);
+    else document.body.prepend(updateNotice);
+  }
+
   const loadedVersion = window.A6000_RELEASE?.version || 'unknown';
   const button = document.getElementById('checkUpdate');
   const notice = document.getElementById('updateNotice');
