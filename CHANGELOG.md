@@ -1,5 +1,10 @@
 # Changelog
 
+## v21.0.7 — 2026-10-17
+
+- Added a self-healing fallback in `pwa.js` that recreates the Check Update button and update notice when an older cached HTML page lacks them.
+- Bumped the service-worker cache version to refresh existing installs.
+
 ## v21.0.6 — 2026-10-17
 
 - Added bilingual Photo Field Case: Sunset — Color, Silhouette & Foreground.
