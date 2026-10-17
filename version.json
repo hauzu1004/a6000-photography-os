@@ -1,7 +1,8 @@
 {
-  "version": "v21.0.3",
+  "version": "v21.0.4",
   "buildDate": "2026-10-17",
   "changelog": [
+    "V21.0.4: Fixed missing update-control elements that stopped pwa.js before service-worker registration; added visible Check Update UI and a one-time service-worker recovery activation.",
     "V21.0.3: Added a bilingual Waterfront Café — Golden Hour photo field case with four compositions and Sony A6000 + 50mm F1.8 exposure presets.",
     "V21.0.2: Added a bilingual Passport Photo 4×6 cm field case for Sony A6000 + 50mm F1.8, including setup, lighting, pose, exposure, crop, print/export and official Vietnamese passport-photo requirements.",
     "V21.0.1: Added bilingual Sony A6000 in-camera Hanoi Morning Film JPEG recipe to the Morning Warm Sun photo case, with Creative Style, WB shift, exposure guidance and safe MR-slot saving.",
