@@ -7,8 +7,8 @@ self.addEventListener('install', event => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE_NAME);
     await cache.addAll(APP_FILES.map(file => new Request(new URL(file, BASE), {cache:'reload'})));
-    const legacy = (await caches.keys()).some(name => /^a6000-os-v(?:18|19|20)\./.test(name));
-    if (legacy) await self.skipWaiting();
+    // One-time recovery release: activate this hotfix so the update controls become available.
+    if (APP_VERSION === 'v21.0.4') await self.skipWaiting();
   })());
 });
 self.addEventListener('activate', event => {
