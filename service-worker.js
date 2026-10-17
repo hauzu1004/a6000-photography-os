@@ -1,4 +1,4 @@
-const APP_VERSION = 'v21.0.5';
+const APP_VERSION = 'v21.0.6';
 const BASE = new URL('./', self.location.href);
 const CACHE_PREFIX = `a6000-field-${BASE.pathname}-`;
 const CACHE_NAME = CACHE_PREFIX + APP_VERSION;
@@ -8,7 +8,7 @@ self.addEventListener('install', event => {
     const cache = await caches.open(CACHE_NAME);
     await cache.addAll(APP_FILES.map(file => new Request(new URL(file, BASE), {cache:'reload'})));
     // One-time recovery release: activate this hotfix so the update controls become available.
-    if (APP_VERSION === 'v21.0.5') await self.skipWaiting();
+    if (APP_VERSION === 'v21.0.6') await self.skipWaiting();
   })());
 });
 self.addEventListener('activate', event => {
