@@ -1,5 +1,10 @@
 # Changelog
 
+## v21.0.6 — 2026-10-17
+
+- Added bilingual Photo Field Case: Sunset — Color, Silhouette & Foreground.
+- Included presets for sunset colors, silhouettes, layered lifestyle and blue hour, plus composition and exposure guidance.
+
 ## v21.0.5 — 2026-10-17
 
 - Added bilingual Photo Field Case: Backlit Ornamental Plant — Leaf Glow.
