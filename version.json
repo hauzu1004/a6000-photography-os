@@ -1,7 +1,8 @@
 {
-  "version": "v21.0.11",
+  "version": "v21.0.12",
   "buildDate": "2026-10-18",
   "changelog": [
+    "V21.0.12: Added a persistent Favorites list for quiz presets and Quick Preset tiles, with stars, remove/clear controls, and direct navigation to the matching Field Case section or Quick Preset tile.",
     "V21.0.11: Added Preset Reflex Quiz with 38 randomized bilingual questions across the Photo Field Case Library, immediate explanations, score/streak feedback, and locally saved best accuracy.",
     "V21.0.10: Added Park Walk — All-Weather Scene Guide with 40 detailed scenes and A6000 + 50mm F1.8 presets for sun, shade, backlight, overcast, rain, motion, blue hour and night.",
     "V21.0.9: Corrected Photo Field Case grid structure so every case button, including sunset, plant, waterfront, passport and wedding, appears inside the searchable grid.",

@@ -49,6 +49,8 @@ function showScreen(screenName) {
   if (videoFieldCasesScreen) videoFieldCasesScreen.classList.remove('active');
   const quizScreen = document.getElementById('quizScreen');
   if (quizScreen) quizScreen.classList.remove('active');
+  const favoritesScreen = document.getElementById('favoritesScreen');
+  if (favoritesScreen) favoritesScreen.classList.remove('active');
 
   // Show requested screen
   if (screenName === 'home') {
@@ -63,6 +65,10 @@ function showScreen(screenName) {
   } else if (screenName === 'quiz') {
     if (quizScreen) quizScreen.classList.add('active');
     setMainTab('photo');
+  } else if (screenName === 'favorites') {
+    if (favoritesScreen) favoritesScreen.classList.add('active');
+    setMainTab('photo');
+    window.renderA6000Favorites?.();
   } else if (screenName === 'weather') {
     if (weatherScreen) weatherScreen.classList.add('active');
   } else if (screenName === 'fieldcases') {

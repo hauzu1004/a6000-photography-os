@@ -42,7 +42,7 @@
   const sections=[['home','Photo OS','Bắt đầu chụp ảnh'],['video','Video OS','Bắt đầu quay phim'],['fieldcases','Photo Field Cases','Tình huống chụp ảnh'],['videofieldcases','Video Field Cases','Tình huống quay phim'],['quicksetup','5-minute setup','Thiết lập 5 phút'],['weather','Weather and light','Thời tiết và ánh sáng'],['memory','MR memories','Bộ nhớ MR'],['controls','Camera controls','Điều khiển máy ảnh'],['firstday','First day','Ngày đầu sử dụng'],['guide','Guide','Hướng dẫn'],['setup','Full setup','Thiết lập đầy đủ']];
   sections.forEach(([key,en,vn])=>add(en,en+' '+vn,`showScreen('${key}')`,key.startsWith('video')?'video':'photo'));
 
-  root.innerHTML = `<div class="field-toolbar"><label class="field-search-label" for="globalSearch"></label><input id="globalSearch" type="search" autocomplete="off"><button id="clearSearch" type="button"></button><button id="checkUpdate" type="button"></button><span id="releaseLabel"></span></div>
+  root.innerHTML = `<div class="field-toolbar"><label class="field-search-label" for="globalSearch"></label><input id="globalSearch" type="search" autocomplete="off"><button id="clearSearch" type="button"></button><button id="openFavorites" type="button"></button><button id="checkUpdate" type="button"></button><span id="releaseLabel"></span></div>
     <details id="fieldPanel"><summary id="toolsSummary"></summary><div class="field-panel-body"><div class="field-filters">
     <label><span data-label="mode"></span><select id="modeFilter"><option value=""></option><option value="photo">Photo</option><option value="video">Video</option></select></label>
     <label><span data-label="light"></span><select id="lightFilter"><option value=""></option><option value="low"></option><option value="sun"></option><option value="soft"></option></select></label>
@@ -93,7 +93,7 @@
     $('releaseLabel').textContent=window.A6000_RELEASE.version;
     root.querySelector('.field-search-label').textContent=t('Find a shot or guide','Tìm cảnh chụp hoặc hướng dẫn');
     $('globalSearch').placeholder=t('Try: cafe, morning, night, aquarium…','Thử: cà phê, buổi sáng, đêm, bể cá…');
-    $('clearSearch').textContent=t('Clear','Xóa tìm kiếm');$('checkUpdate').textContent=t('Check update','Kiểm tra cập nhật');
+    $('clearSearch').textContent=t('Clear','Xóa tìm kiếm');$('openFavorites').textContent=t('★ Favorites','★ Yêu thích');$('checkUpdate').textContent=t('Check update','Kiểm tra cập nhật');
     $('toolsSummary').textContent=t('Filters · field workflows · preflight','Bộ lọc · quy trình thực địa · kiểm tra trước khi chụp');
     const labels={mode:['Mode','Chế độ'],light:['Light','Ánh sáng'],subject:['Subject','Chủ thể'],purpose:['Purpose','Mục đích'],lens:['Lens','Ống kính']};
     for(const [key,value] of Object.entries(labels))root.querySelector(`[data-label="${key}"]`).textContent=t(...value);
@@ -108,7 +108,10 @@
     $('fieldShortcuts').replaceChildren();
     [['5-minute setup','Thiết lập 5 phút',"showScreen('quicksetup')"],['Outdoor photo','Ảnh ngoài trời',"showScenario('travel')"],['Moving subject','Chủ thể chuyển động',"showScenario('action')"],['Low-light photo','Ảnh thiếu sáng',"showScenario('night')"],['Cinematic video','Quay điện ảnh',"openVideoPreset('videoPresetV1')"],['Moving video','Quay chuyển động',"openVideoPreset('videoPresetV6')"],['Low-light video','Quay thiếu sáng',"openVideoPreset('videoPresetV3')"]].forEach(([en,vn,action])=>{const b=document.createElement('button');b.type='button';b.textContent=t(en,vn);b.addEventListener('click',()=>navigate(action));$('fieldShortcuts').append(b);});
     renderResults();
+    $('openFavorites').textContent=t('★ Favorites','★ Yêu thích')+' ('+(window.A6000Favorites?.count?.()||0)+')';
   }
+  $('openFavorites').addEventListener('click',()=>{window.showScreen?.('favorites');window.renderA6000Favorites?.();});
+  window.addEventListener('a6000:favorites-change',()=>{$('openFavorites').textContent=t('★ Favorites','★ Yêu thích')+' ('+(window.A6000Favorites?.count?.()||0)+')';});
   $('globalSearch').addEventListener('input',renderResults);
   $('globalSearch').addEventListener('keydown',e=>{if(e.key==='Escape')$('clearSearch').click();});
   root.querySelectorAll('select').forEach(n=>n.addEventListener('change',renderResults));

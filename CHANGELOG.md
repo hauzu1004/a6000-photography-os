@@ -1,5 +1,11 @@
 # Changelog
 
+## v21.0.12 — 2026-10-18
+
+- Added a persistent Favorites list for preset choices saved after Reflex Quiz answers and stars on Quick Preset tiles.
+- Favorites can be removed individually or cleared, and link back to the matching Field Case section or Quick Preset tile.
+- Added deployment validation and interaction tests for saving, displaying, and opening Favorites.
+
 ## v21.0.11 — 2026-10-18
 
 - Added Preset Reflex Quiz with 38 randomized bilingual questions spanning all 11 Photo Field Case groups.

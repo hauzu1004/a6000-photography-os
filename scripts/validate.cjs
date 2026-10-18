@@ -26,6 +26,11 @@ const scenarioCards=[...doc.querySelectorAll('.scenario-card')];
 for(const card of scenarioCards){
  assert.ok(!card.parentElement.closest('.scenario-card'),'Nested scenario card hides content/navigation: '+card.id);
 }
+assert.ok(doc.getElementById('favoritesScreen'),'Missing Favorites screen');
+assert.ok(doc.getElementById('favoritesApp'),'Missing Favorites mount point');
+assert.ok(doc.querySelector('#fieldTools')||doc.getElementById('fieldTools'),'Missing Favorites toolbar mount');
+assert.ok(fs.existsSync('favorites.js'),'Missing Favorites application script');
+assert.ok(fs.readFileSync('service-worker.js','utf8').includes("'favorites.js'"),'Favorites script is not precached');
 assert.ok(doc.getElementById('quizScreen'),'Missing Preset Reflex Quiz screen');
 assert.ok(doc.getElementById('quizApp'),'Missing Preset Reflex Quiz mount point');
 assert.ok(doc.querySelector('.quiz-launch-btn'),'Missing Preset Reflex Quiz launch button');

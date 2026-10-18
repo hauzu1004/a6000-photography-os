@@ -3850,6 +3850,16 @@
   </div>
 </div>
 
+<!-- Saved Favorites Screen -->
+<div id="favoritesScreen" class="scenario-card favorites-screen">
+  <button class="back-btn field-case-back" type="button" onclick="showScreen('home')">← <span data-en="Back to Photo OS" data-vi="Quay lại Photo OS">Back to Photo OS</span></button>
+  <div class="card-header">
+    <div class="card-title">★ <span data-en="Favorites" data-vi="Yêu thích">Favorites</span></div>
+    <div class="card-subtitle" data-en="Your saved presets from Reflex Quiz and Quick Presets. Open an item to jump to its source, or remove it when you no longer need it." data-vi="Các preset đã lưu từ bài luyện phản xạ và Preset nhanh. Mở một mục để chuyển tới nơi gốc, hoặc xóa mục không còn cần.">Your saved presets from Reflex Quiz and Quick Presets. Open an item to jump to its source, or remove it when you no longer need it.</div>
+  </div>
+  <div id="favoritesApp" aria-live="polite"></div>
+</div>
+
 <!-- Preset Reflex Quiz Screen -->
 <div id="quizScreen" class="scenario-card quiz-screen">
   <button class="back-btn field-case-back" type="button" onclick="showScreen('fieldcases')">← <span data-en="Back to Field Case Library" data-vi="Quay lại Thư viện tình huống">Back to Field Case Library</span></button>
@@ -3862,6 +3872,7 @@
 
 <script src="./field-cases.js"></script>
 <script src="./legacy-app.js"></script>
+<script src="./favorites.js"></script>
 <script src="./quiz.js"></script>
 <script src="./release.js"></script>
 <script src="./field-tools.js"></script>

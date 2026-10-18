@@ -195,14 +195,22 @@
     }).join('');
     const correct=state.answered&&state.options[state.selected]?.correct;
     const right=state.options.find(x=>x.correct);
+    const favoriteSaved=window.A6000Favorites?.has('quiz:'+item.id)===true;
     root.innerHTML='<div class="quiz-topline"><span class="quiz-count">'+esc(t('QUESTION','CÂU'))+' '+(state.index+1)+' / '+state.round.length+'</span><span class="quiz-live-score">'+esc(t('Score','Điểm'))+' '+state.score+' · '+esc(t('Streak','Chuỗi đúng'))+' '+state.streak+'</span></div>' +
       '<div class="quiz-progress"><span style="width:'+progress+'%"></span></div><article class="quiz-question-card"><div class="quiz-case-label">'+esc(t('FIELD CASE','TÌNH HUỐNG'))+' · '+esc(caseTitle(item.caseId))+'</div>' +
       '<div class="quiz-scene">'+esc(vi?item.sceneV:item.sceneE)+'</div><h2 class="quiz-ask">'+esc(vi?item.askV:item.askE)+'</h2><div class="quiz-options">'+choices+'</div></article>' +
       (state.answered?'<section class="quiz-feedback '+(correct?'feedback-correct':'feedback-wrong')+'" role="status"><div class="quiz-feedback-heading">'+(correct?'✓ '+esc(t('Correct!','Chính xác!')):'↻ '+esc(t('Not quite — learn this one','Chưa đúng — hãy ghi nhớ câu này')) )+'</div>' +
       '<div class="quiz-answer"><b>'+esc(t('Correct preset','Preset đúng'))+':</b> '+esc(vi?right.vi:right.en)+'</div><p>'+esc(vi?item.whyV:item.whyE)+'</p><div class="quiz-field-tip"><b>'+esc(t('Field tip','Mẹo thực địa'))+':</b> '+esc(vi?item.tipV:item.tipE)+'</div>' +
+      '<button type="button" class="quiz-favorite-toggle quiz-favorite-in-answer '+(favoriteSaved?'is-saved':'')+'" onclick="toggleCurrentQuizFavorite()">'+(favoriteSaved?'★ '+esc(t('Saved to Favorites','Đã lưu vào Yêu thích')):'☆ '+esc(t('Save preset to Favorites','Lưu preset vào Yêu thích')) )+'</button>' +
       '<button class="quiz-primary" type="button" onclick="nextReflexQuestion()">'+esc(state.index+1>=state.round.length?t('SEE YOUR RESULTS →','XEM KẾT QUẢ →'):t('NEXT QUESTION →','CÂU TIẾP THEO →'))+'</button></section>' :
       '<p class="quiz-hint">'+esc(t('Choose the best starting preset. The explanation appears after you respond.','Chọn preset khởi đầu phù hợp nhất. Giải thích sẽ hiện sau khi trả lời.'))+'</p>');
   }
+  window.toggleCurrentQuizFavorite = () => {
+    const item=state.round[state.index]; const option=state.options.find(x=>x.correct);
+    if(!state.answered||!item||!option||!window.A6000Favorites)return;
+    window.A6000Favorites.toggleQuiz(item,option); renderQuestion();
+  };
+
   function renderSummary() {
     const total=state.round.length, percent=total?Math.round(state.score/total*100):0, stats=getStats();
     if (!state.finished) {
