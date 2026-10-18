@@ -142,7 +142,7 @@
     const button = [...document.querySelectorAll('#fieldCaseGrid .field-case-btn')].find(n => (n.getAttribute('onclick') || '').includes("showFieldCase('" + id + "')"));
     return button?.querySelector('.field-case-title')?.textContent?.trim() || id;
   };
-  let state = {mode:'all',length:10,round:[],index:0,score:0,streak:0,bestStreak:0,answered:false,selected:-1,options:[],optionQuestion:null,missed:[]};
+  let state = {mode:'all',length:10,round:[],index:0,score:0,streak:0,bestStreak:0,answered:false,selected:-1,options:[],optionQuestion:null,missed:[],finished:false};
 
   window.launchReflexQuiz = () => { if (window.showScreen) window.showScreen('quiz'); renderIntro(); };
   window.startReflexQuiz = () => {
@@ -150,7 +150,7 @@
     state.length = Number(document.getElementById('quizLength')?.value || 10);
     const pool = bank.filter(item => state.mode === 'all' || item.group === state.mode);
     state.round = shuffle(pool).slice(0, Math.min(state.length, pool.length));
-    state.index=0; state.score=0; state.streak=0; state.bestStreak=0; state.answered=false; state.selected=-1; state.options=[]; state.optionQuestion=null; state.missed=[];
+    state.index=0; state.score=0; state.streak=0; state.bestStreak=0; state.answered=false; state.selected=-1; state.options=[]; state.optionQuestion=null; state.missed=[]; state.finished=false;
     renderQuestion();
   };
   window.answerReflexQuiz = index => {
@@ -205,8 +205,10 @@
   }
   function renderSummary() {
     const total=state.round.length, percent=total?Math.round(state.score/total*100):0, stats=getStats();
-    stats.rounds=Number(stats.rounds||0)+1; stats.correct=Number(stats.correct||0)+state.score; stats.answered=Number(stats.answered||0)+total;
-    stats.bestPercent=Math.max(Number(stats.bestPercent||0),percent); stats.lastPercent=percent; saveStats(stats);
+    if (!state.finished) {
+      stats.rounds=Number(stats.rounds||0)+1; stats.correct=Number(stats.correct||0)+state.score; stats.answered=Number(stats.answered||0)+total;
+      stats.bestPercent=Math.max(Number(stats.bestPercent||0),percent); stats.lastPercent=percent; saveStats(stats); state.finished=true;
+    }
     const vi=document.documentElement.lang==='vi';
     const misses=state.missed.length?'<div class="quiz-review-list"><h3>'+esc(t('Review these scenes','Ôn lại các tình huống này'))+'</h3>'+state.missed.map(item=>'<div class="quiz-review-item"><b>'+esc(caseTitle(item.caseId))+'</b><p>'+esc(vi?item.sceneV:item.sceneE)+'</p><small>'+esc(vi?item.options.find(x=>x.correct)?.vi:item.options.find(x=>x.correct)?.en)+'</small></div>').join('')+'</div>':'<p class="quiz-perfect">'+esc(t('Perfect round. Increase the question count to keep building reflexes.','Hoàn hảo! Hãy tăng số câu để tiếp tục luyện phản xạ.'))+'</p>';
     root.innerHTML='<div class="quiz-results"><div class="quiz-kicker">'+esc(t('ROUND COMPLETE','HOÀN THÀNH LƯỢT'))+'</div><div class="quiz-score-ring"><strong>'+percent+'%</strong><span>'+state.score+' / '+total+'</span></div>' +
@@ -215,6 +217,6 @@
   }
   window.addEventListener('a6000:language-change',()=>{
     if (!document.getElementById('quizScreen')?.classList.contains('active')) return;
-    if (state.round.length&&state.index<state.round.length&&state.optionQuestion) renderQuestion(); else renderIntro();
+    if (state.finished) renderSummary(); else if (state.round.length&&state.index<state.round.length&&state.optionQuestion) renderQuestion(); else renderIntro();
   });
 })();

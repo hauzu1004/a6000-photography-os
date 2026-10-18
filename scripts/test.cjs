@@ -39,7 +39,7 @@ async function ui(){
  for(let i=0;i<5;i++){assert.ok(w.document.querySelector('.quiz-question-card'),'Quiz question missing');w.answerReflexQuiz(0);assert.ok(w.document.querySelector('.quiz-feedback'),'Answer feedback did not appear');w.nextReflexQuestion();}
  assert.ok(w.document.querySelector('.quiz-results'),'Quiz summary did not appear');
  assert.equal(JSON.parse(w.localStorage.getItem('a6000-reflex-quiz-v1')).rounds,1,'Completed quiz stats were not saved');
- w.setLang('en');w.showScreen('fieldcases');
+ w.setLang('en');assert.ok(w.document.querySelector('.quiz-results'),'Changing language hid quiz results');assert.equal(JSON.parse(w.localStorage.getItem('a6000-reflex-quiz-v1')).rounds,1,'Language change double-counted the round');w.showScreen('fieldcases');
  const search=w.document.getElementById('globalSearch');search.value='aquarium';search.dispatchEvent(new w.Event('input'));
  const results=[...w.document.querySelectorAll('#resultList button')];assert.ok(results.some(n=>n.textContent.includes('Aquarium')),'Search finds hidden cases');
  results.find(n=>n.textContent.startsWith('🎥')).click();assert.ok(w.document.getElementById('videoFieldCaseDetail').textContent.includes('AQUARIUM'));
