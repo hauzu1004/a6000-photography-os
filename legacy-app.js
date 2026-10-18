@@ -17,6 +17,7 @@ function setLang(lang) {
       el.innerHTML = text;
     }
   });
+  window.dispatchEvent(new CustomEvent('a6000:language-change', {detail:{lang}}));
 }
 
 function setMainTab(tab) {
@@ -46,6 +47,8 @@ function showScreen(screenName) {
   if (videoScreen) videoScreen.classList.remove('active');
   const videoFieldCasesScreen = document.getElementById('videoFieldCasesScreen');
   if (videoFieldCasesScreen) videoFieldCasesScreen.classList.remove('active');
+  const quizScreen = document.getElementById('quizScreen');
+  if (quizScreen) quizScreen.classList.remove('active');
 
   // Show requested screen
   if (screenName === 'home') {
@@ -57,6 +60,9 @@ function showScreen(screenName) {
   } else if (screenName === 'videofieldcases') {
     if (videoFieldCasesScreen) videoFieldCasesScreen.classList.add('active');
     setMainTab('video');
+  } else if (screenName === 'quiz') {
+    if (quizScreen) quizScreen.classList.add('active');
+    setMainTab('photo');
   } else if (screenName === 'weather') {
     if (weatherScreen) weatherScreen.classList.add('active');
   } else if (screenName === 'fieldcases') {

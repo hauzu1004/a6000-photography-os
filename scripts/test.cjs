@@ -4,7 +4,7 @@ async function ui(){
  const dom=new JSDOM(fs.readFileSync('index.html','utf8'),{url:'https://example.test/a6000-photography-os/',runScripts:'outside-only',pretendToBeVisual:true});
  const w=dom.window;w.scrollTo=()=>{};w.HTMLElement.prototype.scrollIntoView=()=>{};w.confirm=()=>true;
  w.localStorage.setItem('a6000-checklist','broken-json');
- for(const file of ['field-cases.js','legacy-app.js','release.js','field-tools.js'])w.eval(fs.readFileSync(file,'utf8'));
+ for(const file of ['field-cases.js','legacy-app.js','quiz.js','release.js','field-tools.js'])w.eval(fs.readFileSync(file,'utf8'));
  w.document.dispatchEvent(new w.Event('DOMContentLoaded'));
  assert.ok(w.document.getElementById('homeScreen').contains(w.document.querySelector('.photo-os-hero')));
  w.showScreen('video');assert.equal(w.document.getElementById('homeScreen').style.display,'none');
@@ -32,6 +32,14 @@ async function ui(){
   assert.ok(!card.classList.contains('active'),'Back navigation left detail visible: '+key);
  }
 
+ w.launchReflexQuiz();assert.ok(w.document.getElementById('quizScreen').classList.contains('active'),'Quiz screen did not open');
+ w.setLang('vi');assert.ok(w.document.getElementById('quizApp').textContent.includes('Luyện mắt nhìn'),'Quiz did not render Vietnamese text');
+ w.document.getElementById('quizLength').value='5';w.document.getElementById('quizMode').value='all';w.startReflexQuiz();
+ assert.equal(w.document.querySelectorAll('#quizApp .quiz-option').length,4,'Quiz should show four answer choices');
+ for(let i=0;i<5;i++){assert.ok(w.document.querySelector('.quiz-question-card'),'Quiz question missing');w.answerReflexQuiz(0);assert.ok(w.document.querySelector('.quiz-feedback'),'Answer feedback did not appear');w.nextReflexQuestion();}
+ assert.ok(w.document.querySelector('.quiz-results'),'Quiz summary did not appear');
+ assert.equal(JSON.parse(w.localStorage.getItem('a6000-reflex-quiz-v1')).rounds,1,'Completed quiz stats were not saved');
+ w.setLang('en');w.showScreen('fieldcases');
  const search=w.document.getElementById('globalSearch');search.value='aquarium';search.dispatchEvent(new w.Event('input'));
  const results=[...w.document.querySelectorAll('#resultList button')];assert.ok(results.some(n=>n.textContent.includes('Aquarium')),'Search finds hidden cases');
  results.find(n=>n.textContent.startsWith('🎥')).click();assert.ok(w.document.getElementById('videoFieldCaseDetail').textContent.includes('AQUARIUM'));
@@ -51,7 +59,7 @@ async function worker(){
  const context={URL,Request,console,caches,fetch:async(r,opts)=>{requests.push({r,opts});return {ok:true,type:'basic',clone(){return this;}};},self:{location:{href:base+'service-worker.js'},addEventListener:(n,cb)=>handlers[n]=cb,skipWaiting:async()=>{skipped++;},clients:{claim:async()=>{claimed++;}}}};
  vm.runInNewContext(fs.readFileSync('service-worker.js','utf8'),context);
  async function lifecycle(name){let task;handlers[name]({waitUntil:p=>task=p});await task;}
- await lifecycle('install');assert.ok(entries.has(base+'field-tools.js'));assert.equal(skipped,1);
+ await lifecycle('install');assert.ok(entries.has(base+'field-tools.js'));assert.ok(entries.has(base+'quiz.js'));assert.ok(entries.has(base+'quiz.css'));assert.equal(skipped,1);
  await lifecycle('activate');assert.equal(claimed,1);assert.deepEqual(deleted,['a6000-os-v19.0.0']);
  async function get(url,method='GET',mode='cors'){let response;handlers.fetch({request:{url,method,mode},respondWith:p=>response=p});return await response;}
  for(const url of ['chrome-extension://abc/file.js','https://other.test/file','https://example.test/other/file'])assert.equal(await get(url),undefined);

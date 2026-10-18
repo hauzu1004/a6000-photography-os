@@ -1,5 +1,10 @@
 # Changelog
 
+## v21.0.11 — 2026-10-18
+
+- Added Preset Reflex Quiz with 38 randomized bilingual questions spanning all 11 Photo Field Case groups.
+- Added 5/10/20-question rounds, category practice, immediate answer explanations, running score/streak, missed-scene review, and locally saved best accuracy.
+
 ## v21.0.10 — 2026-10-18
 
 - Added Park Walk — All-Weather Scene Guide with 40 bilingual photography scenes and scene-specific presets.

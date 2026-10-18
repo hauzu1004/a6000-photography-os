@@ -19,6 +19,7 @@
 
 <link rel="stylesheet" href="./app.css">
 <link rel="stylesheet" href="./field-tools.css">
+<link rel="stylesheet" href="./quiz.css">
 </head>
 <body>
 
@@ -487,6 +488,15 @@
 
   <div class="info-card">
     <div class="info-text" data-en="New cases can be added here over time. Use simple keywords such as “night”, “dark sky”, “flower”, “street light”, “hoa ban đêm”, or “trời đen”." data-vi="Các tình huống mới có thể được thêm vào đây theo thời gian. Hãy dùng từ khóa đơn giản như “night”, “dark sky”, “flower”, “street light”, “hoa ban đêm” hoặc “trời đen”.">New cases can be added here over time. Use simple keywords such as “night”, “dark sky”, “flower”, “street light”, “hoa ban đêm”, or “trời đen”.</div>
+  </div>
+
+  <div class="quiz-launch-card">
+    <div class="quiz-launch-copy">
+      <div class="quiz-launch-eyebrow" data-en="NEW · TRAINING MODE" data-vi="MỚI · CHẾ ĐỘ LUYỆN TẬP">NEW · TRAINING MODE</div>
+      <div class="quiz-launch-title" data-en="🎯 Preset Reflex Quiz" data-vi="🎯 Trắc nghiệm phản xạ preset">🎯 Preset Reflex Quiz</div>
+      <p data-en="Random real-world situations from the Photo Field Case Library. Choose a preset, then see the answer and reasoning immediately." data-vi="Tình huống thực tế ngẫu nhiên từ Thư viện Case Ảnh. Chọn preset, sau đó xem đáp án và giải thích ngay.">Random real-world situations from the Photo Field Case Library. Choose a preset, then see the answer and reasoning immediately.</p>
+    </div>
+    <button class="quiz-launch-btn" type="button" onclick="launchReflexQuiz()"><span data-en="START TRAINING →" data-vi="BẮT ĐẦU LUYỆN →">START TRAINING →</span><small data-en="5 / 10 / 20 random questions" data-vi="5 / 10 / 20 câu ngẫu nhiên">5 / 10 / 20 random questions</small></button>
   </div>
 
   <input id="fieldCaseSearch" class="field-library-search" type="search" oninput="filterFieldCases(this.value)" placeholder="Search: night, flower, dark sky, hoa ban đêm..." aria-label="Search field cases">
@@ -3840,8 +3850,19 @@
   </div>
 </div>
 
+<!-- Preset Reflex Quiz Screen -->
+<div id="quizScreen" class="scenario-card quiz-screen">
+  <button class="back-btn field-case-back" type="button" onclick="showScreen('fieldcases')">← <span data-en="Back to Field Case Library" data-vi="Quay lại Thư viện tình huống">Back to Field Case Library</span></button>
+  <div class="card-header">
+    <div class="card-title">🎯 <span data-en="Preset Reflex Quiz" data-vi="Trắc nghiệm phản xạ preset">Preset Reflex Quiz</span></div>
+    <div class="card-subtitle" data-en="Train fast preset recall for Sony A6000 + E 50mm F1.8 OSS. Choose first; reveal the answer after each response." data-vi="Luyện nhớ preset nhanh cho Sony A6000 + E 50mm F1.8 OSS. Chọn đáp án trước; sau mỗi câu sẽ hiện lời giải.">Train fast preset recall for Sony A6000 + E 50mm F1.8 OSS. Choose first; reveal the answer after each response.</div>
+  </div>
+  <div id="quizApp" aria-live="polite"></div>
+</div>
+
 <script src="./field-cases.js"></script>
 <script src="./legacy-app.js"></script>
+<script src="./quiz.js"></script>
 <script src="./release.js"></script>
 <script src="./field-tools.js"></script>
 <script src="./pwa.js"></script>

@@ -26,6 +26,12 @@ const scenarioCards=[...doc.querySelectorAll('.scenario-card')];
 for(const card of scenarioCards){
  assert.ok(!card.parentElement.closest('.scenario-card'),'Nested scenario card hides content/navigation: '+card.id);
 }
+assert.ok(doc.getElementById('quizScreen'),'Missing Preset Reflex Quiz screen');
+assert.ok(doc.getElementById('quizApp'),'Missing Preset Reflex Quiz mount point');
+assert.ok(doc.querySelector('.quiz-launch-btn'),'Missing Preset Reflex Quiz launch button');
+assert.ok(!doc.getElementById('quizScreen').parentElement.closest('.scenario-card'),'Quiz screen must not be nested');
+const quizSource=fs.readFileSync('quiz.js','utf8');
+assert.ok((quizSource.match(/\n    q\('/g)||[]).length>=30,'Quiz bank should contain at least 30 questions');
 assert.ok(doc.getElementById('parkWalkCard'),'Missing Park Walk detail card');
 assert.ok(doc.getElementById('parkWalkCard').querySelectorAll('.section-card').length>=40,'Park Walk scene coverage is incomplete');
 for(const button of doc.querySelectorAll('#fieldCaseGrid .field-case-btn')){
